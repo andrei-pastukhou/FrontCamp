@@ -1,87 +1,127 @@
+const config = {
+  'API_KEY': 'abe8dc4a8fe14125aa16bb323913586c',
+  'url': 'https://newsapi.org/v2/everything', // Url without query string. Query string adds in updateNews function.
+  'channelList' : [ // title => link text.
+    {'title': 'ABC News', 'source': 'abc-news'},
+    {'title': 'Aftenposten', 'source': 'aftenposten'},
+    {'title': 'BBC News', 'source': 'bbc-news'},
+    {'title': 'CNN', 'source': 'cnn'},
+    {'title': 'Daily Mail', 'source': 'daily-mail'},
+  ],
+  'ListLinkClasses' : ['flex-sm-fill', 'text-sm-center', 'nav-link'],  //clases for link in channel choose list
+};
+
 class App {
-  //====================================================================================================================
+
   constructor() {
-    this.API_KEY = 'abe8dc4a8fe14125aa16bb323913586c';
-    this.url = 'https://newsapi.org/v2/everything'; // Url without query string. Query string adds in update_news function.
-    this.channel_list = [ // title => link text.
-      {'title':'ABC News', 'source':'abc-news'},
-      {'title':'Aftenposten', 'source':'aftenposten'},
-      {'title':'BBC News', 'source':'bbc-news'},
-      {'title':'CNN', 'source':'cnn'},
-      {'title':'Daily Mail', 'source':'daily-mail'},
-    ];
+    // Use config like parametr's of app's object.
+    this.API_KEY = config.API_KEY;
+    this.url = config.url;
+    this.channelList = config.channelList;
+    this.ListLinkClasses = config.ListLinkClasses;
     // Shortcuts to DOM Elements.
-    this.channel_list_container = document.getElementById('channels_list');
-    this.news_container = document.getElementById('news');
-    // First call function to init.
-    this.draw_channel_list_link();
-    this.update_news();
+    this.channelListContainer = this.getDomElement('channels_list');
+    this.newsContainer = this.getDomElement('news');
   }
-  //====================================================================================================================
+
+  // Return dom element with id. If id's element absent create new div element with necessary id.
+  getDomElement(id) {
+    let div = document.getElementById(id);
+    if (! div) {
+      div = document.createElement('div');
+      div.id = id;
+      document.body.appendChild(div);
+    }
+    return div;
+  }
+
+  // Do first call of necessary function.
+  start() {
+    this.drawChannelListLink();
+    this.updateNews();
+  }
+
   // Draw links to choose the new's chanell.
-  draw_channel_list_link() {
-    this.channel_list.forEach( function(element){
-      let {title,source} = element;
+  drawChannelListLink() {
+    this.channelList.forEach(function (element) {
+      let {title, source} = element;
       let linkText = document.createTextNode(title);
       let a = document.createElement('a');
       a.appendChild(linkText);
       a.href = '#';
       a.setAttribute('source', source);
-      a.classList.add(...ListLinkClasses);
-      if(localStorage.getItem(element.source)){
+      a.classList.add(...this.ListLinkClasses);
+      if (localStorage.getItem(element.source)) {
         a.classList.add('active');
       }
-      this.channel_list_container.append(a);
-      a.addEventListener('click', function(e){ e.preventDefault(); this.channel_link_click(a);}.bind(this));
+      this.channelListContainer.append(a);
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        this.clickChannelLink(a);
+      }.bind(this));
     }.bind(this));
   }
-  //====================================================================================================================
+
   // Event of click on channel choose link.
-  channel_link_click(a) {
+  clickChannelLink(a) {
     let source = a.getAttribute('source');
-    if(localStorage.getItem(source)){
+    if (localStorage.getItem(source)) {
       localStorage.removeItem(source);
       a.classList.remove('active');
-    }else{
+    } else {
       localStorage.setItem(source, a.innerHTML);
       a.classList.add('active');
     }
-    this.update_news(); // update/redraw list of news.
+    this.updateNews();
   }
-  //====================================================================================================================
-  update_news() {
-    this.news_container.innerHTML = '';
-    var sources = [];
+
+  // Update/redraw list of news.
+  updateNews() {
+    this.newsContainer.innerHTML = '';
+    let sources = [];
     // Loads all the notes.
     for (let key in localStorage) {
       sources.push(key);
     }
+
     let source = sources.join(',');
-    if(source) {
-      let url = this.url + '?' + `sources=${source}` + `&sortBy=publishedAt&apiKey=${this.API_KEY}`;
+    if (source) {
+      const url = `${this.url}?sources=${source}&sortBy=publishedAt&apiKey=${this.API_KEY}`;
       let req = new Request(url);
-      fetch(req).then(function (response) {
-          response.json().then(function (data) {
-              data.articles.forEach(function (e) {
-                this.draw_news(e);
-              }.bind(this));
+      if(req) {
+        fetch(req)
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            data.articles.forEach(function (e) {
+              this.drawNews(e);
+            }.bind(this));
           }.bind(this));
-      }.bind(this))
+      } else {
+        alert ('sorry service is unavalibale');
+      }
     }
   }
-  //====================================================================================================================
-  draw_news(news) {
+
+  /*
+    Function create new object (NewsNote) and append it to news block.
+    Input is object:
+    {author: 'name of author', description : 'description', publishedAt : 'time when was publish',
+        source : {id: , title},
+     title: 'title of news', url: 'url to source', urlToImage: 'url to get image to news'}
+  */
+  drawNews(news) {
     if (news) {
       let note = document.createElement('news-note');
       note.setNews(news);
-      this.news_container.append(note);
+      this.newsContainer.append(note);
     }
   }
 }
 
 // Class of new html elements.
 class NewsNote extends HTMLElement {
-  //====================================================================================================================
   // Fires when an instance of the element is created.
   createdCallback() {
     this.innerHTML = NewsNote.TEMPLATE;
@@ -92,14 +132,14 @@ class NewsNote extends HTMLElement {
     this.urlElement = this.querySelector('.btn');
     this.imgElement = this.querySelector('.card-img-top')
   }
-  //====================================================================================================================
-  // Sets the message of the note.
+
+  // Sets the parametrs of the note.
   setNews(news) {
-    let {name : source_name} = news.source; // name of source
+    let {name: source_name} = news.source; // name of source
     let formated_date = new Date(news.publishedAt);
-    this.urlElement.href =  news.url;
+    this.urlElement.href = news.url;
     // img of news
-    if(news.urlToImage) {
+    if (news.urlToImage) {
       this.imgElement.src = news.urlToImage;
     }
     this.descriptionElement.textContent = news.description;
@@ -110,11 +150,11 @@ class NewsNote extends HTMLElement {
 }
 
 // Add format function to Data type.
-Date.prototype.format = function(format = 'YYYY-MM-DD hh:mm') {
-  let zeropad = function(number, length) {
+Date.prototype.format = function (format = 'YYYY-MM-DD hh:mm') {
+  let zeropad = function (number, length) {
       number = number.toString();
       length = length || 2;
-      while(number.length < length)
+      while (number.length < length)
         number = '0' + number;
       return number;
     },
@@ -128,7 +168,7 @@ Date.prototype.format = function(format = 'YYYY-MM-DD hh:mm') {
     },
     pattern = '(' + Object.keys(formats).join(')|(') + ')';
 
-  return format.replace(new RegExp(pattern, 'g'), function(match) {
+  return format.replace(new RegExp(pattern, 'g'), function (match) {
     return formats[match];
   });
 };
@@ -146,12 +186,12 @@ NewsNote.TEMPLATE = `
         </div>
      </div>
 `;
-//clases for link in channel choose list
-ListLinkClasses = ['flex-sm-fill', 'text-sm-center', 'nav-link'];
 
 // register news-note object
 document.registerElement('news-note', NewsNote);
 
+// Create application.
+const app = new App();
 // Start app after load a page.
-window.addEventListener('load', () => new App());
+window.addEventListener('load',  () => {app.start();});
 
