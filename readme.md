@@ -2,4 +2,4 @@ The name of each folder equal number of task. For eaxample task 1 equal to folde
 
 Below is list with link to pages.github, where you can see execution of each task:
 
-    Task 1 : https://andrei-pastukhou.github.io/FrontCamp/
+    Task 1 : https://andrei-pastukhou.github.io/FrontCamp/task1/index.html
