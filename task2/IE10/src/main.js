@@ -1,5 +1,5 @@
-
-//import "isomorphic-fetch";
+require('es6-promise').polyfill();
+require("isomorphic-fetch");
 
 // Configuration object, use to configure the app, should be send like parametr to constructor.
 const config = {
