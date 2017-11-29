@@ -1,5 +1,5 @@
-
-//import "isomorphic-fetch";
+require('es6-promise').polyfill();
+require("isomorphic-fetch");
 
 // Configuration object, use to configure the app, should be send like parametr to constructor.
 const config = {
@@ -185,7 +185,7 @@ function customFormateDate (date, format = 'YYYY-MM-DD hh:mm') {
 };
 
 // Initial content of the news-note element.
-var template = `
+let template = `
     <div class="card" style="width: 20rem;">
         <img class="card-img-top">
         <div class="card-body">
@@ -197,9 +197,6 @@ var template = `
         </div>
      </div>
 `;
-
-// register news-note object
-//document.registerElement('news-note', NewsNote);
 
 // Create application.
 const app = new App(config);

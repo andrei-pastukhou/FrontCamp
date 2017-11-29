@@ -4,14 +4,19 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "release": "babel src --out-dir dist"
+    "release": " babel src/main.js -o app/js/main.js && browserify app/js/main.js -o app/js/main.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "andrei pastukhou",
   "license": "ISC",
   "dependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1"
+    "babel-preset-env": "^1.6.1",
+    "browserify": "^14.5.0",
+    "es6-promise": "^4.1.1",
+    "isomorphic-fetch": "^2.2.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-register": "^6.26.0"
+  }
 }
