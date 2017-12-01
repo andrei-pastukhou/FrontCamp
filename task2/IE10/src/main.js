@@ -52,6 +52,7 @@ class App {
     if (!div) {
       div = document.createElement('div');
       // noinspection JSCheckFunctionSignatures
+
       div.setAttribute('id', id);
       document.body.appendChild(div);
     }
@@ -59,21 +60,25 @@ class App {
     return div;
   }
 
+
   /**
    * Call necessary method of App object for start working.
    *
    * @this {App}
    */
+
   start() {
     this.drawChannelListLink();
     this.updateNews();
   }
+
 
   /**
    * Draw links to choose the new's channel.
    *
    * @this {App}
    */
+
   drawChannelListLink() {
     this.config.channelList.forEach((element) => {
       const {title, source} = element;
@@ -82,10 +87,12 @@ class App {
       a.appendChild(linkText);
       a.href = '#';
       a.setAttribute('source', source);
+
       // Add all classes.
       this.config.listLinkClasses.forEach((linkClass) => {
         a.classList.add(linkClass);
       });
+
       if (localStorage.getItem(element.source)) {
         a.classList.toggle('active');
       }
@@ -103,22 +110,27 @@ class App {
    *
    * @this {App}
    * @param  {HTMLElement} a is a html link
+
    */
   clickChannelLink(a) {
     const source = a.getAttribute('source');
 
+
     // If source exist in localStorage then delete it, at opposite case add.
     (localStorage.getItem(source)) ? localStorage.removeItem(source) : localStorage.setItem(source, a.innerHTML);
+
 
     a.classList.toggle('active');
     this.updateNews();
   }
+
 
   /**
    * Function to update/redraw list of news.
    *
    * @this {App}
    */
+
   updateNews() {
     this.newsContainer.innerHTML = '';
     const sources = [];
@@ -140,6 +152,7 @@ class App {
           // noinspection Annotator
           data.articles.forEach(this.drawNews.bind(this));
         });
+
     }
   }
 
@@ -178,6 +191,7 @@ class App {
    */
   setNews(note, news) {
     note.innerHTML = template;
+
     note.descriptionElement = note.querySelector('.card-text');
     note.publishedAtElement = note.querySelector('.publishedAt');
     note.sourceElement = note.querySelector('.source');
@@ -185,11 +199,13 @@ class App {
     note.urlElement = note.querySelector('.btn');
     note.imgElement = note.querySelector('.card-img-top');
 
+
     const {name: source_name} = news.source; // Name of source.
     const formatedDate = new Date(news.publishedAt);
     note.urlElement.href = news.url;
 
     // Img of news.
+
     if (news.urlToImage) {
       note.imgElement.src = news.urlToImage;
     }
@@ -198,6 +214,7 @@ class App {
     note.sourceElement.textContent = source_name;
     note.titleElement.textContent = news.title;
   }
+
 }
 
 /**
@@ -229,14 +246,17 @@ function customFormateDate(date, format = 'YYYY-MM-DD hh:mm') {
   };
   const pattern = '(' + Object.keys(formats).join(')|(') + ')';
 
+
   return format.replace(new RegExp(pattern, 'g'), (match) => {
       return formats[match];
     }
   );
+
 }
 
 // Initial content of the news-note element.
 let template = `
+
     <div class="card" style="width: 20rem;">
         <img class="card-img-top">
         <div class="card-body">
@@ -249,10 +269,12 @@ let template = `
      </div>
 `;
 
+
 // Create application.
 const app = new App(config);
 // Start app after load a page.
 window.addEventListener('load', () => {
   app.start();
 });
+
 

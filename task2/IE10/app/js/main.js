@@ -203,11 +203,14 @@ var config = {
   'channelList': [// title => link text.
   { 'title': 'ABC News', 'source': 'abc-news' }, { 'title': 'Aftenposten', 'source': 'aftenposten' }, { 'title': 'BBC News', 'source': 'bbc-news' }, { 'title': 'CNN', 'source': 'cnn' }, { 'title': 'Daily Mail', 'source': 'daily-mail' }],
 
-  // Class for link in channel choose list.
+
+ task2  // Class for link in channel choose list.
+
   'listLinkClasses': ['flex-sm-fill', 'text-sm-center', 'nav-link']
 };
 
 var App = function () {
+
   /**
    * Creates an instance of App.
    *
@@ -238,14 +241,17 @@ var App = function () {
    */
 
 
+
   _createClass(App, [{
     key: 'getDomElement',
     value: function getDomElement(id) {
+
       // noinspection JSCheckFunctionSignatures
       var div = document.getElementById(id);
       if (!div) {
         div = document.createElement('div');
-        // noinspection JSCheckFunctionSignatures
+      
+
         div.setAttribute('id', id);
         document.body.appendChild(div);
       }
@@ -253,11 +259,13 @@ var App = function () {
       return div;
     }
 
+
     /**
      * Call necessary method of App object for start working.
      *
      * @this {App}
      */
+
 
   }, {
     key: 'start',
@@ -266,11 +274,13 @@ var App = function () {
       this.updateNews();
     }
 
+
     /**
      * Draw links to choose the new's channel.
      *
      * @this {App}
      */
+
 
   }, {
     key: 'drawChannelListLink',
@@ -278,6 +288,8 @@ var App = function () {
       var _this = this;
 
       this.config.channelList.forEach(function (element) {
+
+
         var title = element.title,
             source = element.source;
 
@@ -286,10 +298,12 @@ var App = function () {
         a.appendChild(linkText);
         a.href = '#';
         a.setAttribute('source', source);
+
         // Add all classes.
         _this.config.listLinkClasses.forEach(function (linkClass) {
           a.classList.add(linkClass);
         });
+
         if (localStorage.getItem(element.source)) {
           a.classList.toggle('active');
         }
@@ -301,11 +315,13 @@ var App = function () {
       });
     }
 
+
     /**
      * Function call onClick event in link to select a new's channel.
      *
      * @this {App}
      * @param  {HTMLElement} a is a html link
+
      */
 
   }, {
@@ -313,18 +329,22 @@ var App = function () {
     value: function clickChannelLink(a) {
       var source = a.getAttribute('source');
 
+
       // If source exist in localStorage then delete it, at opposite case add.
+
       localStorage.getItem(source) ? localStorage.removeItem(source) : localStorage.setItem(source, a.innerHTML);
 
       a.classList.toggle('active');
       this.updateNews();
     }
 
+
     /**
      * Function to update/redraw list of news.
      *
      * @this {App}
      */
+
 
   }, {
     key: 'updateNews',
@@ -343,16 +363,19 @@ var App = function () {
 
       if (source) {
         var url = this.config.url + '?sources=' + source + '&sortBy=publishedAt&apiKey=' + this.config.apiKey;
+
         fetch(url).then(function (response) {
           return response.json();
         }).then(function (data) {
           // noinspection Annotator
           data.articles.forEach(_this2.drawNews.bind(_this2));
         });
+
       }
     }
 
     /**
+
      * Function create new dev HTMLElement (NewsNote) and append it to news block.
      *
      * @this {App}
@@ -364,16 +387,20 @@ var App = function () {
      *                }
      **/
 
+
   }, {
     key: 'drawNews',
     value: function drawNews(news) {
       // Check if not empty.
       if (Object.keys(news).length !== 0) {
         var note = document.createElement('div');
+
+
         this.setNews(note, news);
         this.newsContainer.appendChild(note);
       }
     }
+
 
     /**
      * Function set attributes to HTMLElement of note according with object's attributes.
@@ -389,6 +416,7 @@ var App = function () {
      *
      */
 
+
   }, {
     key: 'setNews',
     value: function setNews(note, news) {
@@ -400,12 +428,16 @@ var App = function () {
       note.urlElement = note.querySelector('.btn');
       note.imgElement = note.querySelector('.card-img-top');
 
+
       var source_name = news.source.name; // Name of source.
+
 
       var formatedDate = new Date(news.publishedAt);
       note.urlElement.href = news.url;
 
+
       // Img of news.
+
       if (news.urlToImage) {
         note.imgElement.src = news.urlToImage;
       }
@@ -419,6 +451,7 @@ var App = function () {
   return App;
 }();
 
+
 /**
  * Function is a utility for format date.
  *
@@ -428,12 +461,14 @@ var App = function () {
  */
 
 
+
 function customFormateDate(date) {
   var format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'YYYY-MM-DD hh:mm';
 
   var zeropad = function zeropad(number, length) {
 
     // Minimum amount of character in date and time. For example const = 1 then 8 hour; const = 2 then 08 hour.
+
     var minNumOfCharacter = 2;
     number = number.toString();
     length = length || minNumOfCharacter;
@@ -442,7 +477,9 @@ function customFormateDate(date) {
     }return number;
   };
 
+
   // Here you can define your formats.
+
   var formats = {
     YYYY: date.getFullYear(),
     MM: zeropad(date.getMonth() + 1),
@@ -455,10 +492,13 @@ function customFormateDate(date) {
   return format.replace(new RegExp(pattern, 'g'), function (match) {
     return formats[match];
   });
+
 }
+
 
 // Initial content of the news-note element.
 var template = '\n    <div class="card" style="width: 20rem;">\n        <img class="card-img-top">\n        <div class="card-body">\n            <h4 class="card-title"></h4>\n            <p class="card-text"></p>\n                 <p class="card-text"><small class="text-muted source"></small></p>\n                 <p class="card-text"><small class="text-muted publishedAt"></small></p>\n            <a href="#" class="btn btn-primary">Read more</a>\n        </div>\n     </div>\n';
+
 
 // Create application.
 var app = new App(config);
