@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Plugin for Babel according with task#2 FrontCamp3",
   "license": "MIT",
-  "main": "dist/index.js",
   "dependencies": {
     "ast": "0.0.1",
     "babel-runtime": "^6.23.0",
@@ -15,13 +14,12 @@
     "babel-plugin-transform-runtime": "^6.23.0"
   },
   "scripts": {
-    "release": "babel src --out-dir dist"
+    "start": "babel src --out-dir dist"
   },
   "keywords": [
     "babel-plugin",
     "console.log",
     "delete expression statment"
   ],
-  "homepage": "https://github.com/RReverser/babel-plugin-hello-world#readme",
   "author": "Andrei Pastukhou"
 }
