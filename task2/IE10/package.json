@@ -2,9 +2,8 @@
   "name": "task2",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
   "scripts": {
-    "release": " babel src/main.js -o app/js/main.js && browserify app/js/main.js -o app/js/main.js"
+    "start": " babel src/main.js -o app/js/main.js && browserify app/js/main.js -o app/js/main.js"
   },
   "keywords": [],
   "author": "andrei pastukhou",
