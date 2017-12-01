@@ -189,8 +189,6 @@ process.umask = function() { return 0; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 require('es6-promise').polyfill();
@@ -205,31 +203,55 @@ var config = {
   'channelList': [// title => link text.
   { 'title': 'ABC News', 'source': 'abc-news' }, { 'title': 'Aftenposten', 'source': 'aftenposten' }, { 'title': 'BBC News', 'source': 'bbc-news' }, { 'title': 'CNN', 'source': 'cnn' }, { 'title': 'Daily Mail', 'source': 'daily-mail' }],
 
-  //clases for link in channel choose list
+
+ task2  // Class for link in channel choose list.
+
   'listLinkClasses': ['flex-sm-fill', 'text-sm-center', 'nav-link']
 };
 
 var App = function () {
+
+  /**
+   * Creates an instance of App.
+   *
+   * @constructor
+   * @this {App}
+   * @param {Object} config parameters.
+   */
   function App(config) {
     _classCallCheck(this, App);
 
-    // Use config like parametr's of app's object.
+    // Use config like parameter's of app's object.
     this.config = config;
 
     // Shortcuts to DOM Elements.
+    // noinspection JSCheckFunctionSignatures
     this.channelListContainer = this.getDomElement('channels_list');
+    // noinspection JSCheckFunctionSignatures
     this.newsContainer = this.getDomElement('news');
   }
 
-  // Return dom element with id. If id's element absent create new div element with necessary id.
+  // noinspection JSMethodCanBeStatic
+  /**
+   * Return dom element with id. If id's element absent create new div element with necessary id.
+   *
+   * @this {App}
+   * @param {text} id of html element.
+   * @return {HTMLElement}
+   */
+
 
 
   _createClass(App, [{
     key: 'getDomElement',
     value: function getDomElement(id) {
+
+      // noinspection JSCheckFunctionSignatures
       var div = document.getElementById(id);
       if (!div) {
         div = document.createElement('div');
+      
+
         div.setAttribute('id', id);
         document.body.appendChild(div);
       }
@@ -237,7 +259,13 @@ var App = function () {
       return div;
     }
 
-    // Do first call of necessary function.
+
+    /**
+     * Call necessary method of App object for start working.
+     *
+     * @this {App}
+     */
+
 
   }, {
     key: 'start',
@@ -246,7 +274,13 @@ var App = function () {
       this.updateNews();
     }
 
-    // Draw links to choose the new's chanell.
+
+    /**
+     * Draw links to choose the new's channel.
+     *
+     * @this {App}
+     */
+
 
   }, {
     key: 'drawChannelListLink',
@@ -254,7 +288,7 @@ var App = function () {
       var _this = this;
 
       this.config.channelList.forEach(function (element) {
-        var _a$classList;
+
 
         var title = element.title,
             source = element.source;
@@ -264,7 +298,12 @@ var App = function () {
         a.appendChild(linkText);
         a.href = '#';
         a.setAttribute('source', source);
-        (_a$classList = a.classList).add.apply(_a$classList, _toConsumableArray(_this.config.listLinkClasses));
+
+        // Add all classes.
+        _this.config.listLinkClasses.forEach(function (linkClass) {
+          a.classList.add(linkClass);
+        });
+
         if (localStorage.getItem(element.source)) {
           a.classList.toggle('active');
         }
@@ -276,9 +315,13 @@ var App = function () {
       });
     }
 
-    /** call onClick event
+
+    /**
+     * Function call onClick event in link to select a new's channel.
      *
-     * @param  {HTMLElement} a
+     * @this {App}
+     * @param  {HTMLElement} a is a html link
+
      */
 
   }, {
@@ -286,14 +329,22 @@ var App = function () {
     value: function clickChannelLink(a) {
       var source = a.getAttribute('source');
 
-      // If source exist in localstorage then delete it, at oposite case add.
+
+      // If source exist in localStorage then delete it, at opposite case add.
+
       localStorage.getItem(source) ? localStorage.removeItem(source) : localStorage.setItem(source, a.innerHTML);
 
       a.classList.toggle('active');
       this.updateNews();
     }
 
-    // Update/redraw list of news.
+
+    /**
+     * Function to update/redraw list of news.
+     *
+     * @this {App}
+     */
+
 
   }, {
     key: 'updateNews',
@@ -312,27 +363,30 @@ var App = function () {
 
       if (source) {
         var url = this.config.url + '?sources=' + source + '&sortBy=publishedAt&apiKey=' + this.config.apiKey;
-        //const req = new Request(url);
-        //if(req) {
+
         fetch(url).then(function (response) {
           return response.json();
         }).then(function (data) {
+          // noinspection Annotator
           data.articles.forEach(_this2.drawNews.bind(_this2));
         });
-        //} else {
-        //  alert ('sorry service is unavalibale');
-        // }
+
       }
     }
 
     /**
-     * Function create new object (NewsNote) and append it to news block.
+
+     * Function create new dev HTMLElement (NewsNote) and append it to news block.
      *
-     * @param 'news' is object:
-     * {author: 'name of author', description : 'description', publishedAt : 'time when was publish',
-     *     source : {id: , title},
-     *  title: 'title of news', url: 'url to source', urlToImage: 'url to get image to news'}
-    **/
+     * @this {App}
+     * @param {Object} news is a object with next structure :
+     *                {
+     *                  author: 'name of author', description : 'description', publishedAt : 'time when was publish',
+     *                  source : {id: , title},
+     *                  title: 'title of news', url: 'url to source', urlToImage: 'url to get image to news'
+     *                }
+     **/
+
 
   }, {
     key: 'drawNews',
@@ -340,11 +394,29 @@ var App = function () {
       // Check if not empty.
       if (Object.keys(news).length !== 0) {
         var note = document.createElement('div');
-        //note.innerHTML = NewsNote.TEMPLATE;
+
+
         this.setNews(note, news);
         this.newsContainer.appendChild(note);
       }
     }
+
+
+    /**
+     * Function set attributes to HTMLElement of note according with object's attributes.
+     *
+     * @this {App}
+     * @param {HTMLElement} note
+     * @param {Object} news is a object with next structure :
+     *                {
+     *                  author: 'name of author', description : 'description', publishedAt : 'time when was publish',
+     *                  source : {id: , title},
+     *                  title: 'title of news', url: 'url to source', urlToImage: 'url to get image to news'
+     *                }
+     *
+     */
+
+
   }, {
     key: 'setNews',
     value: function setNews(note, news) {
@@ -356,12 +428,16 @@ var App = function () {
       note.urlElement = note.querySelector('.btn');
       note.imgElement = note.querySelector('.card-img-top');
 
-      var source_name = news.source.name; // name of source
+
+      var source_name = news.source.name; // Name of source.
+
 
       var formatedDate = new Date(news.publishedAt);
       note.urlElement.href = news.url;
 
-      // img of news
+
+      // Img of news.
+
       if (news.urlToImage) {
         note.imgElement.src = news.urlToImage;
       }
@@ -375,7 +451,15 @@ var App = function () {
   return App;
 }();
 
-// Add format function to Data type.
+
+/**
+ * Function is a utility for format date.
+ *
+ * @param {Date} date
+ * @param {String} format
+ * @return {String} formatted date according with parameter of format.
+ */
+
 
 
 function customFormateDate(date) {
@@ -383,7 +467,8 @@ function customFormateDate(date) {
 
   var zeropad = function zeropad(number, length) {
 
-    // Minimum amount of character in date and time. For example const = 1 then 8 hour; const = 2 then 08 hour;
+    // Minimum amount of character in date and time. For example const = 1 then 8 hour; const = 2 then 08 hour.
+
     var minNumOfCharacter = 2;
     number = number.toString();
     length = length || minNumOfCharacter;
@@ -392,7 +477,9 @@ function customFormateDate(date) {
     }return number;
   };
 
-  // here you can define your formats
+
+  // Here you can define your formats.
+
   var formats = {
     YYYY: date.getFullYear(),
     MM: zeropad(date.getMonth() + 1),
@@ -405,13 +492,13 @@ function customFormateDate(date) {
   return format.replace(new RegExp(pattern, 'g'), function (match) {
     return formats[match];
   });
-};
+
+}
+
 
 // Initial content of the news-note element.
 var template = '\n    <div class="card" style="width: 20rem;">\n        <img class="card-img-top">\n        <div class="card-body">\n            <h4 class="card-title"></h4>\n            <p class="card-text"></p>\n                 <p class="card-text"><small class="text-muted source"></small></p>\n                 <p class="card-text"><small class="text-muted publishedAt"></small></p>\n            <a href="#" class="btn btn-primary">Read more</a>\n        </div>\n     </div>\n';
 
-// register news-note object
-//document.registerElement('news-note', NewsNote);
 
 // Create application.
 var app = new App(config);
