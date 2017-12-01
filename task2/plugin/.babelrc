@@ -1,3 +1,4 @@
 {
-  "plugins": ["transform-runtime", "./plugin_src/removeConsoleLog.js"]
+  "presets": [],
+  "plugins": ["transform-runtime", "./plugin_src/removeConsoleLog.js"],
 }
