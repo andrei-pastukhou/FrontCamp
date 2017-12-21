@@ -1,3 +1,5 @@
+import * as actions from '../actions'
+
 let initialState = [
   {
     title: 'ABC News',
@@ -29,7 +31,7 @@ let initialState = [
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'CLICK_LINK':
+    case actions.CLICK_LINK:
       let newState = state;
       newState.map((channel,index) => {
         if (index === action.id){

@@ -1,19 +1,13 @@
-import {config} from '../constants/Config'
-export const CLICK_LINK = 'CLICK_LINK';
+import {config} from '../config.js'
 
-export function clickLink(id, selected) {
-  return {
-      type: CLICK_LINK,
-      id,
-      selected
-  }
-};
-
-
+//define constants for action.type.
 export const FETCH_NEWS = 'FETCH_NEWS';
 export const FETCH_NEWS_SUCCESS = 'FETCH_NEWS_SUCCESS';
 export const FETCH_NEWS_ERROR = 'FETCH_NEWS_ERROR';
 
+export const CLICK_LINK = 'CLICK_LINK';
+
+//Function to get news from remote server. Function call in link onClick event
 export function fetchAllNewsFromServer() {
   return (dispatch, getState) => {
     let currentState = getState();
@@ -37,3 +31,11 @@ export function fetchAllNewsFromServer() {
   }
 }
 
+//Function call in link onClick event
+export function clickLink(id, selected) {
+  return {
+    type: CLICK_LINK,
+    id,
+    selected
+  }
+}

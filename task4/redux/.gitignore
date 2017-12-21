@@ -8,9 +8,9 @@
 # curl -O https://gist.githubusercontent.com/salcode/10017553/raw/.gitignore
 # to download this file
 #
-# This file is tailored for a general web project, it
+# This file is tailored for a general web project, it 
 # is NOT optimized for a WordPress project.  See
-# https://gist.github.com/salcode/b515f520d3f8207ecd04
+# https://gist.github.com/salcode/b515f520d3f8207ecd04 
 # for a WordPress specific .gitignore
 #
 # This file specifies intentionally untracked files to ignore
@@ -35,7 +35,7 @@
 #          add curl line for quick installation
 #          ignore composer files (vendor directory and lock file)
 # 20140606 Add .editorconfig as a tracked file
-# 20140418 remove explicit inclusion
+# 20140418 remove explicit inclusion 
 #          of readme.md (this is not an ignored file by default)
 # 20140407 Initially Published
 #
@@ -92,7 +92,7 @@ Thumbs.db
 # -------------------------
 # BEGIN Whitelisted Files
 # -------------------------
-
+ 
 # track these files, if they exist
 !.gitignore
 !.editorconfig

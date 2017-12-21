@@ -1,19 +1,29 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { createStore,  applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'
-import App from './containers/App'
-import thunk from 'redux-thunk' // <-- добавили redux-thunk
+import "./css/bootstrap.min.css";
+
+import {createStore,  applyMiddleware } from 'redux';
+import thunk from 'redux-thunk'
 import reducer from './reducers'
-import './css/bootstrap.min.css'
+
+import * as actions from './actions'
+
+import * as newsRender from './renders/NewsList';
+import * as linkRender from './renders/ChannelLink';
 
 
+let store = createStore(reducer, applyMiddleware(thunk))
 
-const store = createStore(reducer, applyMiddleware(thunk));
+//Function will call every time when store change. Use for visualization store state.
+function render() {
 
-render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);
+  linkRender.render( store );
+
+
+  newsRender.render( store );
+}
+
+//First visualization store (in that moment store have initial state which define in reducers)
+render();
+store.subscribe(render);
+
+// Try get news from server. It necessary for download news if selected is true in any channel from initial state.
+store.dispatch(actions.fetchAllNewsFromServer());
