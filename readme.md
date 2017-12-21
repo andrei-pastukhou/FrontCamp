@@ -4,4 +4,8 @@ Below is list with link to pages.github, where you can see execution of each tas
 
     Task 1 : https://andrei-pastukhou.github.io/FrontCamp/task1/index.html
     Task 2(IE10) : https://andrei-pastukhou.github.io/FrontCamp/task2/IE10/app/index.html
+    Task3 : https://andrei-pastukhou.github.io/FrontCamp/task3/index.html
+    Task4(MVC) : https://andrei-pastukhou.github.io/FrontCamp/task4/mvc/index.html
+    Task4(redux) : https://andrei-pastukhou.github.io/FrontCamp/task4/redux/index.html
+
    
