@@ -1,8 +1,9 @@
-import {storage} from './storageModel.js';
+import {Storage} from './storageModel.js';
+import {config} from '../config.js'
 /**
  * Class implement object of one link which provide ability to choose necessary new's channel.
  */
-class linkModel {
+class LinkModel {
   /**
    * Creates an instance of linkModel.
    *
@@ -13,7 +14,7 @@ class linkModel {
   constructor(parameter) {
     this.source = parameter.source;
     this.title = parameter.title;
-    this.storage = new storage;
+    this.storage = new Storage;
     this.init();
   }
 
@@ -23,10 +24,9 @@ class linkModel {
    * @this {linkModel}
    */
   todoClick() {
-    this.selected = !this.selected; // Change selected status to opposite.
-    // According with state of selected, add or delete this ite, from storage.
+    this.selected = !this.selected;
     if(this.selected){
-      this.storage.setItem(this.source,'chanel');
+      this.storage.setItem(this.source, config.keyWord);
     }else {
       this.storage.removeItem(this.source);
     }
@@ -38,8 +38,8 @@ class linkModel {
    * @this {linkModel}
    */
   init() {
-    this.selected = !!(storage.getItem(this.source));
+    this.selected = !!(Storage.getItem(this.source));
   }
 }
 
-export {linkModel};
+export {LinkModel};

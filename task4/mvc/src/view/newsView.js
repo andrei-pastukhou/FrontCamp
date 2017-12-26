@@ -1,5 +1,5 @@
 
-class interfaceView {
+class InterfaceView {
   constructor() {
     this.domElement = null;
   }
@@ -9,7 +9,7 @@ class interfaceView {
 /**
  * Class implement view logic to newsModel class.
  */
-class newsView extends interfaceView {
+class NewsView extends InterfaceView {
   /**
    * Creates an instance of linkView.
    *
@@ -54,4 +54,4 @@ class newsView extends interfaceView {
   }
 }
 
-export {newsView};
+export {NewsView};

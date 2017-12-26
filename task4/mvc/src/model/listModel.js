@@ -2,7 +2,7 @@
  * This class implement structure pattern factory.
  * Class implement model of list object's .
  */
-class listModel{
+class ListModel{
 
   /**
    * Creates an instance of listModel.
@@ -18,7 +18,7 @@ class listModel{
   constructor(childClass, modelsArray, options) {
     this.childClass = childClass;
     this.list = [];
-    if(modelsArray) {
+    if(Array.isArray(modelsArray) && (modelsArray.length > 0)) {
       modelsArray.forEach((parameter) => {
         this.list.push(new childClass(parameter));
       });
@@ -53,7 +53,7 @@ class listModel{
    */
   updateData(data) {
     this.list = [];
-    if(data) {
+    if(Array.isArray(data) && (data.length > 0)) {
       data.forEach((parameter) => {
         this.list.push(new this.childClass(parameter));
       });
@@ -61,4 +61,4 @@ class listModel{
   }
 }
 
-export {listModel};
+export {ListModel};

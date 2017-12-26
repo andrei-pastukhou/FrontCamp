@@ -1,6 +1,6 @@
 import {EventObserver} from "../model/eventObserverModel";
 
-class interfaceView {
+class InterfaceView {
   constructor() {
     this.domElement = null;
   }
@@ -11,7 +11,7 @@ class interfaceView {
 /**
  * Class implement view logic to linkModel class.
  */
-class linkView extends interfaceView {
+class LinkView extends InterfaceView {
   /**
    * Creates an instance of linkView.
    *
@@ -23,7 +23,6 @@ class linkView extends interfaceView {
     super();
     this.model = model;
     this.actionClick = new EventObserver();
-    this.clases = ['flex-sm-fill', 'text-sm-center', 'nav-link'];
     this.init();
   }
 
@@ -34,6 +33,8 @@ class linkView extends interfaceView {
    * @this {linkView}
    */
   init() {
+
+    this.clases = ['flex-sm-fill', 'text-sm-center', 'nav-link'];
     this.domElement = document.createElement('a');
     this.domElement.appendChild(document.createTextNode(this.model.title));
     this.domElement.href = '#';
@@ -61,4 +62,4 @@ class linkView extends interfaceView {
   }
 }
 
-export {linkView};
+export {LinkView};

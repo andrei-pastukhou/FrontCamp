@@ -3,7 +3,7 @@
  *
  * In that class implement functions which will execute when happen some event and it will have influence for EventObserver.
  */
-class linkListController {
+class LinkListController {
 
   /**
    * Creates an instance of linkListController.
@@ -24,16 +24,20 @@ class linkListController {
    * @this {linkListController}
    */
   init() {
-    this.model.list.forEach((link) => {
-      let linkView = new this.view(link);
-      linkView.actionClick.subscribe(() => {
-        link.todoClick();
+    if(Array.isArray(this.model.list)) {
+      this.model.list.forEach((link) => {
+        let linkView = new this.view(link);
+        const linkAction = () => {
+          link.todoClick();
+          linkView.render();
+        };
+        linkView.actionClick.subscribe(linkAction);
         linkView.render();
+        this.model.domElement.appendChild(linkView.domElement);
       });
-      linkView.render();
-      this.model.domElement.appendChild(linkView.domElement);
-    });
+    }
   }
+
 }
 
-export {linkListController};
+export {LinkListController};

@@ -7,7 +7,7 @@ import {EventObserver} from "./eventObserverModel";
  * After updating some value will call actionUpdate in eventObserver.
  */
 let storageInstance = null;
-class storage  {
+class Storage  {
 
   /**
    * Creates an instance of storage.
@@ -43,8 +43,10 @@ class storage  {
    * @param {String} key.
    */
   removeItem(key) {
-    localStorage.removeItem(key);
-    this.actionUpdate.broadcast();
+    if(localStorage.getItem(key)) {
+      localStorage.removeItem(key);
+      this.actionUpdate.broadcast();
+    }
   }
 
   /**
@@ -62,12 +64,25 @@ class storage  {
    * Return array with all items.
    *
    * @this {storage}
+   * @param {string} keyWord - if is set than return only array which consist of key where key=>keyWord in storage.
    * @return {Array}
    */
-  static getArray() {
-    return localStorage;
+  static getArray(keyWord = false) {
+    const sources = Object.keys(localStorage);
+    if(!keyWord) {
+      return sources;
+    }
+    let returnArray = [];
+    if(Array.isArray(sources) && (sources.length > 0)){
+      sources.forEach((item) => {
+        if(localStorage.getItem(item) === keyWord) {
+          returnArray.push(item);
+        }
+      });
+    }
+    return returnArray;
   }
 }
 
 export {storageInstance};
-export {storage};
+export {Storage};

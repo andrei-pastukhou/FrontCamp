@@ -1,7 +1,7 @@
 /**
  * Class implenemt object of onq news. Each attribute of this class equal with data from remote server.
  */
-class newsModel {
+class NewsModel {
 
   /**
    * Creates an instance of newsModel.
@@ -22,4 +22,4 @@ class newsModel {
   }
 }
 
-export {newsModel};
+export {NewsModel};

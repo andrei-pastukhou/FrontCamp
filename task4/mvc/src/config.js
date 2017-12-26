@@ -16,6 +16,7 @@ const config = {
   url : 'https://newsapi.org/v2/everything', // Url of new's API service.
   sortBy : 'publishedAt', // Parameter of sorting data from service (publishedAt  = date of publication ).
 
+  keyWord : 'channel', // Key word for identify own's record in a storage.
 };
 
 export {config};

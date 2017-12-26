@@ -1,12 +1,12 @@
-import {storage} from "../model/storageModel";
-import {urlRequest} from "../model/urlRequestModel.js";
+import {Storage} from "../model/storageModel";
+import {UrlRequest} from "../model/urlRequestModel.js";
 
 /**
  * Class controller for newsList object.
  *
  * In that class implement functions which will execute when happen some event and it will have influence for EventObserver.
  */
-class newsController {
+class NewsController {
 
   /**
    * Creates an instance of newsController.
@@ -17,8 +17,8 @@ class newsController {
    * @param {class} view. Class with implementation of display element from list.
    */
   constructor(newsListObj,view) {
-    this.storage = new storage;
-    this.request = new urlRequest;
+    this.storage = new Storage;
+    this.request = new UrlRequest;
     this.newsList = newsListObj;
     this.view = view;
   }
@@ -29,20 +29,19 @@ class newsController {
    * @this {newsController}
    */
   init() {
-    // Logic for actionUpdate of storage.
-    this.storage.actionUpdate.subscribe(() => {
-      this.request.getResult(this.storage);
-    });
-    // Logic for actionPending of request.
-    this.request.actionPending.subscribe(() => {
-      console.log('start downloading');
-    });
-    // Logic for actionFulfilled of request.
-    this.request.actionFulfilled.subscribe((data) => {
+
+    const newsUpdate = () => { this.request.getResult(this.storage); };
+    const newsPending = () => {console.log('start downloading');};
+    const newsFulfilled = (data) => {
       console.log('finish downloading');
       this.newsList.updateData(data);
       this.drawNews();
-    });
+    };
+
+    this.storage.actionUpdate.subscribe(newsUpdate);
+    this.request.actionPending.subscribe(newsPending);
+    this.request.actionFulfilled.subscribe((data) => {newsFulfilled(data)});
+
     this.request.getResult();
     this.drawNews();
   }
@@ -53,11 +52,8 @@ class newsController {
    * @this {newsController}
    */
   drawNews() {
-    // Do clear for newsList dom.
     this.newsList.domElement.innerHTML = '';
-
-    // For each newsModel in list create a view and append it to list dom.
-    if(this.newsList.list) {
+    if(Array.isArray(this.newsList.list) && (this.newsList.list.length > 0)) {
       this.newsList.list.forEach((news) => {
         const imgView = new this.view(news);
         imgView.render();
@@ -67,4 +63,4 @@ class newsController {
   }
 }
 
-export {newsController};
+export {NewsController};
