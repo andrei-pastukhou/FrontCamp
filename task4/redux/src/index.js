@@ -1,23 +1,20 @@
 import "./css/bootstrap.min.css";
 
-import {createStore,  applyMiddleware } from 'redux';
-import thunk from 'redux-thunk'
-import reducer from './reducers'
+import {createStore} from  './handMadeRedux'
 
-import * as actions from './actions'
-
+import rootReducer from './reducers'
 import * as newsRender from './renders/NewsList';
 import * as linkRender from './renders/ChannelLink';
+import * as actions from './actions';
 
 
-let store = createStore(reducer, applyMiddleware(thunk))
+
+
+let store = createStore(rootReducer);
 
 //Function will call every time when store change. Use for visualization store state.
 function render() {
-
   linkRender.render( store );
-
-
   newsRender.render( store );
 }
 
