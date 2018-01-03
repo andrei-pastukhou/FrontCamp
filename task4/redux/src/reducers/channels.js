@@ -1,4 +1,4 @@
-import * as actions from '../actions'
+import * as types from '../constants';
 
 let initialState = [
   {
@@ -31,7 +31,7 @@ let initialState = [
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actions.CLICK_LINK:
+    case types.CLICK_LINK:
       let newState = state;
       newState.map((channel,index) => {
         if (index === action.id){

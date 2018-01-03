@@ -1,10 +1,5 @@
 import {config} from '../config.js'
-
-//define constants for action.type.
-export const FETCH_NEWS = 'FETCH_NEWS';
-export const FETCH_NEWS_SUCCESS = 'FETCH_NEWS_SUCCESS';
-export const FETCH_NEWS_ERROR = 'FETCH_NEWS_ERROR';
-export const CLICK_LINK = 'CLICK_LINK';
+import * as types from '../constants';
 
 //Function to get news from remote server. Function call in link onClick event
 export function fetchAllNewsFromServer() {
@@ -17,15 +12,14 @@ export function fetchAllNewsFromServer() {
       }});
     const source = sources.join(',');
     if(source){
-      dispatch({type: FETCH_NEWS});
-      const req = new Request(`${config.url}?sources=${source}&sortBy=publishedAt&apiKey=${config.apiKey}`);
-      fetch(req)
+      dispatch({type: types.FETCH_NEWS});
+      fetch(`${config.url}?sources=${source}&sortBy=publishedAt&apiKey=${config.apiKey}`)
         .then((response) => { return response.json();})
-        .then(data => dispatch({type: FETCH_NEWS_SUCCESS, news: data.articles}))
-        .catch(errors => dispatch({type: FETCH_NEWS_ERROR, errors: errors}))
+        .then(data => dispatch({type: types.FETCH_NEWS_SUCCESS, news: data.articles}))
+        .catch(errors => dispatch({type: types.FETCH_NEWS_ERROR, errors: errors}))
     }
     else {
-      dispatch({type: FETCH_NEWS_SUCCESS, news: []})
+      dispatch({type: types.FETCH_NEWS_SUCCESS, news: []})
     }
   }
 }
@@ -33,7 +27,7 @@ export function fetchAllNewsFromServer() {
 //Function call in link onClick event
 export function clickLink(id, selected) {
   return {
-    type: CLICK_LINK,
+    type: types.CLICK_LINK,
     id,
     selected
   }
