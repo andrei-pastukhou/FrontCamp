@@ -1,5 +1,5 @@
 import {config} from '../config.js'
-import * as types from '../constants';
+import {FETCH_NEWS, FETCH_NEWS_SUCCESS, FETCH_NEWS_ERROR, CLICK_LINK} from '../constants';
 
 //Function to get news from remote server. Function call in link onClick event
 export function fetchAllNewsFromServer() {
@@ -12,14 +12,14 @@ export function fetchAllNewsFromServer() {
       }});
     const source = sources.join(',');
     if(source){
-      dispatch({type: types.FETCH_NEWS});
+      dispatch({type: FETCH_NEWS});
       fetch(`${config.url}?sources=${source}&sortBy=publishedAt&apiKey=${config.apiKey}`)
         .then((response) => { return response.json();})
-        .then(data => dispatch({type: types.FETCH_NEWS_SUCCESS, news: data.articles}))
-        .catch(errors => dispatch({type: types.FETCH_NEWS_ERROR, errors: errors}))
+        .then(data => dispatch({type: FETCH_NEWS_SUCCESS, news: data.articles}))
+        .catch(errors => dispatch({type: FETCH_NEWS_ERROR, errors: errors}))
     }
     else {
-      dispatch({type: types.FETCH_NEWS_SUCCESS, news: []})
+      dispatch({type: FETCH_NEWS_SUCCESS, news: []})
     }
   }
 }
@@ -27,7 +27,7 @@ export function fetchAllNewsFromServer() {
 //Function call in link onClick event
 export function clickLink(id, selected) {
   return {
-    type: types.CLICK_LINK,
+    type: CLICK_LINK,
     id,
     selected
   }
