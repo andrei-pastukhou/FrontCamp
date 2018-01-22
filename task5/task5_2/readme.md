@@ -137,36 +137,36 @@ For you reference the number of messages from phillip.love@enron.co to sladana-a
 
 Query:
 ```
-db.messages.aggregate( [{$group : {_id:"$_id", from:{$last : "$headers.From"}, to: {$first : "$headers.To"}}}, {$unwind: { path: "$to"}},    { "$group": { _id: {"from": "$from", "to": "$to"}, "count": { "$sum": 1 }}}, {$sort :{count :-1}}    ])
+    db.messages.aggregate( [{ $unwind: "$headers.To" },{$group : {_id:"$_id", from:{$first : "$headers.From"}, to: { $addToSet: "$headers.To" }}}, {$unwind:  "$to"},    { "$group": { _id: {"from": "$from", "to": "$to"}, "count": { "$sum": 1 }}}, {$sort :{count :-1}}    ])
 ```
 
 Result:
 ```
-    { "_id" : { "from" : "veronica.espinoza@enron.com", "to" : "recipients@enron.com" }, "count" : 2181 }
-    { "_id" : { "from" : "susan.mara@enron.com", "to" : "richard.shapiro@enron.com" }, "count" : 974 }
-    { "_id" : { "from" : "susan.mara@enron.com", "to" : "jeff.dasovich@enron.com" }, "count" : 750 }
-    { "_id" : { "from" : "susan.mara@enron.com", "to" : "james.wright@enron.com" }, "count" : 708 }
-    { "_id" : { "from" : "soblander@carrfut.com", "to" : "soblander@carrfut.com" }, "count" : 679 }
-    { "_id" : { "from" : "susan.mara@enron.com", "to" : "james.steffes@enron.com" }, "count" : 648 }
-    { "_id" : { "from" : "evelyn.metoyer@enron.com", "to" : "kate.symes@enron.com" }, "count" : 567 }
-    { "_id" : { "from" : "susan.mara@enron.com", "to" : "karen.denne@enron.com" }, "count" : 552 }
-    { "_id" : { "from" : "susan.mara@enron.com", "to" : "alan.comnes@enron.com" }, "count" : 550 }
-    { "_id" : { "from" : "susan.mara@enron.com", "to" : "paul.kaufman@enron.com" }, "count" : 509 }
-    { "_id" : { "from" : "rhonda.denton@enron.com", "to" : "mark.guzman@enron.com" }, "count" : 493 }
-    { "_id" : { "from" : "susan.mara@enron.com", "to" : "harry.kingerski@enron.com" }, "count" : 489 }
-    { "_id" : { "from" : "sgovenar@govadv.com", "to" : "paul.kaufman@enron.com" }, "count" : 488 }
-    { "_id" : { "from" : "sgovenar@govadv.com", "to" : "jdasovic@enron.com" }, "count" : 485 }
-    { "_id" : { "from" : "sgovenar@govadv.com", "to" : "harry.kingerski@enron.com" }, "count" : 481 }
-    { "_id" : { "from" : "sgovenar@govadv.com", "to" : "smara@enron.com" }, "count" : 467 }
-    { "_id" : { "from" : "sgovenar@govadv.com", "to" : "mday@gmssr.com" }, "count" : 464 }
-    { "_id" : { "from" : "susan.mara@enron.com", "to" : "sandra.mccubbin@enron.com" }, "count" : 464 }
-    { "_id" : { "from" : "sgovenar@govadv.com", "to" : "steven.j.kean@enron.com" }, "count" : 460 }
-    { "_id" : { "from" : "sgovenar@govadv.com", "to" : "rshapiro@enron.com" }, "count" : 457 }
+   { "_id" : { "from" : "susan.mara@enron.com", "to" : "jeff.dasovich@enron.com" }, "count" : 750 }
+   { "_id" : { "from" : "soblander@carrfut.com", "to" : "soblander@carrfut.com" }, "count" : 679 }
+   { "_id" : { "from" : "susan.mara@enron.com", "to" : "james.steffes@enron.com" }, "count" : 646 }
+   { "_id" : { "from" : "susan.mara@enron.com", "to" : "richard.shapiro@enron.com" }, "count" : 616 }
+   { "_id" : { "from" : "evelyn.metoyer@enron.com", "to" : "kate.symes@enron.com" }, "count" : 567 }
+   { "_id" : { "from" : "susan.mara@enron.com", "to" : "karen.denne@enron.com" }, "count" : 552 }
+   { "_id" : { "from" : "susan.mara@enron.com", "to" : "alan.comnes@enron.com" }, "count" : 550 }
+   { "_id" : { "from" : "susan.mara@enron.com", "to" : "paul.kaufman@enron.com" }, "count" : 506 }
+   { "_id" : { "from" : "susan.mara@enron.com", "to" : "harry.kingerski@enron.com" }, "count" : 489 }
+   { "_id" : { "from" : "sgovenar@govadv.com", "to" : "paul.kaufman@enron.com" }, "count" : 488 }
+   { "_id" : { "from" : "sgovenar@govadv.com", "to" : "jdasovic@enron.com" }, "count" : 485 }
+   { "_id" : { "from" : "sgovenar@govadv.com", "to" : "harry.kingerski@enron.com" }, "count" : 481 }
+   { "_id" : { "from" : "sgovenar@govadv.com", "to" : "smara@enron.com" }, "count" : 467 }
+   { "_id" : { "from" : "sgovenar@govadv.com", "to" : "mday@gmssr.com" }, "count" : 464 }
+   { "_id" : { "from" : "susan.mara@enron.com", "to" : "sandra.mccubbin@enron.com" }, "count" : 464 }
+   { "_id" : { "from" : "sgovenar@govadv.com", "to" : "steven.j.kean@enron.com" }, "count" : 460 }
+   { "_id" : { "from" : "sgovenar@govadv.com", "to" : "rshapiro@enron.com" }, "count" : 457 }
+   { "_id" : { "from" : "sgovenar@govadv.com", "to" : "bhansen@lhom.com" }, "count" : 457 }
+   { "_id" : { "from" : "sgovenar@govadv.com", "to" : "james.d.steffes@enron.com" }, "count" : 454 }
+   { "_id" : { "from" : "sgovenar@govadv.com", "to" : "acomnes@enron.com" }, "count" : 452 }
     Type "it" for more
     
 ```
 
 Answer:
 ```
-    { "_id" : { "from" : "veronica.espinoza@enron.com", "to" : "recipients@enron.com" }, "count" : 2181 }
+     { "_id" : { "from" : "susan.mara@enron.com", "to" : "jeff.dasovich@enron.com" }, "count" : 750 }
 ```
