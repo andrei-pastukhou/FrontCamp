@@ -48,7 +48,7 @@ Look at a document from the collection to get familiar with the schema. Answer t
 2. What are the top 3 destination cities outside of the United States (destCountry field, not included) with the highest average passengers count? Show result as { "avgPassengers" : 2312.380, "city" : "Minsk, Belarus" }
     Query:
     ```
-    db.airlines.aggregate([{$match: { "originCountry" : "United States", "destCountry" : {$ne :"United States"} }},{$group: {_id : "$destCity", avgPassengers: { $avg: "$passengers" }, city: {$first : "$destCity"}}},{ $sort : { avgPassengers : -1}},{$limit : 3},{$project: {_id : 0}}])
+    db.airlines.aggregate([{$match: { "destCountry" : {$ne :"United States"} }},{$group: {_id : "$destCity", avgPassengers: { $avg: "$passengers" }, city: {$first : "$destCity"}}},{ $sort : { avgPassengers : -1}},{$limit : 3},{$project: {_id : 0}}])
     ```
     
     Result:
