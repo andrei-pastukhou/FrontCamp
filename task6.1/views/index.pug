@@ -1,21 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  br
-  Rest api server located at http://localhost:3000/blogs
-  br
-  available next comands:
-  br
-  GET http://localhost:3000/blogs
-  br
-  GET http://localhost:3000/blogs/{id_post}
-  br
-  POST http://localhost:3000/blogs
-  br
-  PUT http://localhost:3000/blogs/{id_post}
-  br
-  DELETE http://localhost:3000/blogs/{id_post}
-  br
-  where id_post is identificator of each post.
+    h1= title
+    p Welcome to #{title}
+    p Rest api server located at http://localhost:3000/blogs
+    p available next comands:
+    p GET http://localhost:3000/blogs
+    p GET http://localhost:3000/blogs/{id_post}
+    p POST http://localhost:3000/blogs
+    p PUT http://localhost:3000/blogs/{id_post}
+    p DELETE http://localhost:3000/blogs/{id_post}
+    p where id_post is identificator of each post.
