@@ -24,3 +24,4 @@ REST API service is located in path ```/blogs``` for example ```http://localhost
 5. DELETE
 >```http://localhost/blogs/#id``` = delete record with identificator = #id.
 
+link to documentation from postman [https://documenter.getpostman.com/view/3617597/frontcamp/7TQ8Vgg](https://documenter.getpostman.com/view/3617597/frontcamp/7TQ8Vgg)
