@@ -8,10 +8,11 @@ const NOT_FOUND = 404;
 // Return  all existing posts
 router.get('/', (req, res, next) => {
     Post.find({}, (err, posts) => {
-        if (err)
+        if (err) {
             res.send(err);
-
-        res.json(posts);
+        } else {
+            res.json(posts);
+        }
     });
 });
 
@@ -32,10 +33,8 @@ router.get('/:post_id', (req, res, next) => {
 
 // Save Post
 router.post('/', (req, res, next) => {
-
     let post = new Post();
     Object.assign(post, req.body)
-    // save the post and check for errors
     post.save(function (err) {
         if (err) {
             res.send(err);
@@ -47,7 +46,6 @@ router.post('/', (req, res, next) => {
 
 // Update Post
 router.put('/:post_id', (req, res, next) => {
-
     Post.findById(req.params.post_id, (err, post) => {
         if (err) {
             res.send(err);
@@ -56,7 +54,6 @@ router.put('/:post_id', (req, res, next) => {
             res.sendStatus(NOT_FOUND);
         } else {
             Object.assign(post, req.body)
-
             post.save(function (err) {
                 if (err) {
                     res.send(err);
@@ -67,14 +64,11 @@ router.put('/:post_id', (req, res, next) => {
     });
 });
 
-// delete Post
 router.delete('/:post_id', (req, res, next) => {
-
     Post.findById(req.params.post_id, (err, post) => {
         if (err) {
             res.send(err);
         }
-
         if (post === null) {
             res.sendStatus(NOT_FOUND);
         } else {
