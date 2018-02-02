@@ -1,43 +1,35 @@
 const express = require('express');
 const router = express.Router();
 var passport = require("passport");
+const isAuthenticated = require('../auth/authenticate')
 const Post = require('../models/post');
 const NOT_FOUND = 404;
 const NO_ACCESS = 403;
 /* GET home page. */
 
 // Return  all existing posts
-router.get('/', (req, res, next) => {
-    if (req.user){
-        Post.find({}, (err, posts) => {
-            if (err) {
-                res.send(err);
-            } else {
-                res.json(posts);
-            }
-        });
-    } else {
-        res.sendStatus(NO_ACCESS);
-    }
-
+router.get('/', isAuthenticated, (req, res, next) => {
+    Post.find({}, (err, posts) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json(posts);
+        }
+    });
 });
 
 // Return post_id's post
-router.get('/:post_id', (req, res, next) => {
-    if (req.user) {
-        Post.findById(req.params.post_id, (err, post) => {
-            if (err) {
-                res.sendStatus(NOT_FOUND);
-            }
-            if (post === null) {
-                res.sendStatus(NOT_FOUND);
-            } else {
-                res.json(post);
-            }
-        });
-    } else {
-        res.sendStatus(NO_ACCESS);
-    }
+router.get('/:post_id', isAuthenticated, (req, res, next) => {
+    Post.findById(req.params.post_id, (err, post) => {
+        if (err) {
+            res.sendStatus(NOT_FOUND);
+        }
+        if (post === null) {
+            res.sendStatus(NOT_FOUND);
+        } else {
+            res.json(post);
+        }
+    });
 });
 
 
@@ -91,5 +83,7 @@ router.delete('/:post_id', (req, res, next) => {
         }
     });
 });
+
+
 
 module.exports = router;
