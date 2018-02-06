@@ -1,24 +1,27 @@
-var mongoose = require("mongoose");
-var passport = require("passport");
-var User = require("../models/user");
+const mongoose = require("mongoose");
+const passport = require("passport");
+const User = require("../models/user");
 
-var userController = {};
+const userController = {};
 
 // Restrict access to root page
-userController.home = function(req, res) {
-    res.render('index', { user : req.user });
+userController.home = (req, res) => {
+    res.render('index', {user: req.user});
 };
 
 // Go to registration page
-userController.register = function(req, res) {
+userController.register = (req, res) => {
     res.render('register');
 };
 
 // Post registration
-userController.doRegister = function(req, res) {
-    User.register(new User({ username : req.body.username, name: req.body.name }), req.body.password, function(err, user) {
+userController.doRegister = (req, res) => {
+    User.register(new User({
+        username: req.body.username,
+        name: req.body.name
+    }), req.body.password, function (err, user) {
         if (err) {
-            return res.render('register', { user : user });
+            return res.render('register', {user: user});
         }
 
         passport.authenticate('local')(req, res, function () {
@@ -28,19 +31,19 @@ userController.doRegister = function(req, res) {
 };
 
 // Go to login page
-userController.login = function(req, res) {
+userController.login = (req, res) => {
     res.render('login');
 };
 
 // Post login
-userController.doLogin = function(req, res) {
+userController.doLogin = (req, res) => {
     passport.authenticate('local')(req, res, function () {
         res.redirect('/');
     });
 };
 
 // logout
-userController.logout = function(req, res) {
+userController.logout = (req, res) => {
     req.logout();
     res.redirect('/');
 };

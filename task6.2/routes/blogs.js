@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-var passport = require("passport");
+const passport = require("passport");
 const isAuthenticated = require('../auth/authenticate')
 const Post = require('../models/post');
 const NOT_FOUND = 404;
-const NO_ACCESS = 403;
+
 /* GET home page. */
 
 // Return  all existing posts

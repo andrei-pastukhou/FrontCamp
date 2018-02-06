@@ -1,5 +1,5 @@
-# Task 6.1 to frontcamp #
-According to task this project is implementation of REST API service.
+# Task 6.2 to frontcamp #
+According to task this project is implementation of REST API service and storage is db mongo. And Also this project provide possibility to registration and login to this app.
 
 To run this project you need already installed mongodb and Node.js with npm in your local machine, or have web servers with installed mongo db and node.js
 
@@ -25,3 +25,6 @@ REST API service is located in path ```/blogs``` for example ```http://localhost
 >```http://localhost/blogs/#id``` = delete record with identificator = #id.
 
 link to documentation from postman [https://documenter.getpostman.com/view/3617597/frontcamp/7TQ8Vgg](https://documenter.getpostman.com/view/3617597/frontcamp/7TQ8Vgg)
+
+##Notice: ##
+According to task there implemented registration and login functionality. And REST api command to get posts and post avalable only to authenticated users. According to this to check functionality you should register and login by web interface.
