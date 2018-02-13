@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {render} from "react-dom";
+
+
 var allItems = []
 allItems.push("Buy ingredients for Crock Pot");
 allItems.push("Pick up chair at IKEA");
@@ -14,18 +16,35 @@ class PostApp extends React.Component {
         this.addPost = this.addPost.bind(this);
         this.FilterPost = this.FilterPost.bind(this);
         this.deletePost = this.deletePost.bind(this);
+
+        this.state = {
+            filterText: '',
+        };
+
+        this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
     }
+
+    handleFilterTextChange(filterText) {
+        this.setState({
+            filterText: filterText
+        });
+    }
+
     // getInitialState() {
     //     return { allItems };
     // }
     render() {
+        console.log(this.props);
         let items = this.props.items.map((item,index) => {
+            if (item.indexOf(this.state.filterText) === -1) {
+                return;
+            }
             return <li key={index} ><PostItem item={item} /><button onClick = {(e) => this.deletePost({index})}>delete</button></li>;
         });
         return(
         <div>
             <AddPostForm addEvent={this.addPost} />
-            <FilterPostForm addEvent={this.FilterPost} />
+            <FilterPostForm filterText={this.state.filterText}  onFilterTextChange={this.handleFilterTextChange}/>
             <ul>{items}</ul>
         </div>
         );
@@ -78,21 +97,25 @@ class FilterPostForm extends React.Component {
     constructor(props){
         super(props);
         this.onSubmit = this.onSubmit.bind(this);
+        this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
     }
-    componentDidMount(){
-        ReactDOM.findDOMNode(this.refs.itemName2).focus();
+
+    handleFilterTextChange(e) {
+        this.props.onFilterTextChange(e.target.value);
     }
+
     render(){
         return (<form onSubmit={this.onSubmit}>
-            <input ref="itemName2" type="text" />
+            <input
+            type="text"
+            placeholder="Search..."
+            value={this.props.filterText}
+            onChange={this.handleFilterTextChange}
+            />
         </form>);
     }
     onSubmit(event){
         event.preventDefault();
-        let input = ReactDOM.findDOMNode(this.refs.itemName2);
-        let newItem2 = input.value;
-        this.props.addEvent({ newItem2 });
-        input.value = '';
     }
 }
 
