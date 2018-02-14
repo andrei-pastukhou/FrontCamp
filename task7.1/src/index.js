@@ -3,10 +3,24 @@ import ReactDOM from "react-dom";
 import {render} from "react-dom";
 
 
-var allItems = []
-allItems.push("Buy ingredients for Crock Pot");
-allItems.push("Pick up chair at IKEA");
-allItems.push("Go see mom");
+var allItems = [
+    {
+        author: 'author1',
+        post: 'some post text from author1'
+    },
+    {
+        author: 'author2',
+        post: 'some post text from author2'
+    },
+    {
+        author: 'author2',
+        post: 'some post text from author2 copy'
+    },
+    {
+        author: 'author3',
+        post: 'some post text from author3'
+    },
+];
 
 
 class PostApp extends React.Component {
@@ -34,9 +48,9 @@ class PostApp extends React.Component {
     //     return { allItems };
     // }
     render() {
-        console.log(this.props);
+        console.log(this.props.items);
         let items = this.props.items.map((item,index) => {
-            if (item.indexOf(this.state.filterText) === -1) {
+            if (item.author.indexOf(this.state.filterText) === -1) {
                 return;
             }
             return <li key={index} ><PostItem item={item} /><button onClick = {(e) => this.deletePost({index})}>delete</button></li>;
@@ -67,7 +81,10 @@ class PostApp extends React.Component {
 
 class PostItem extends React.Component {
     render(){
-        return <div>{this.props.item}</div>;
+        return (<div>
+                    <b>author:</b>{this.props.item.author}<br />
+                    <b>post:</b>{this.props.item.post}<br />
+                </div>);
     }
 }
 
@@ -77,19 +94,23 @@ class AddPostForm extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
     componentDidMount(){
-        ReactDOM.findDOMNode(this.refs.itemName).focus();
+        ReactDOM.findDOMNode(this.refs.author).focus();
     }
     render(){
         return (<form onSubmit={this.onSubmit}>
-            <input ref="itemName" type="text" />
+            <b>author</b><input ref="author" type="text" />
+            <b>post</b><input ref="post" type="text" />
+            <input type="submit" />
         </form>);
     }
     onSubmit(event){
         event.preventDefault();
-        let input = ReactDOM.findDOMNode(this.refs.itemName);
-        let newItem = input.value;
+        let postInput = ReactDOM.findDOMNode(this.refs.post);
+        let authorInput = ReactDOM.findDOMNode(this.refs.author);
+        let newItem = {author:authorInput.value, post:postInput.value};
         this.props.addEvent({ newItem });
-        input.value = '';
+        postInput.value = '';
+        authorInput.value = '';
     }
 }
 
