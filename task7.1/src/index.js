@@ -53,13 +53,13 @@ class PostApp extends React.Component {
             if (item.author.indexOf(this.state.filterText) === -1) {
                 return;
             }
-            return <li key={index} ><PostItem item={item} /><button onClick = {(e) => this.deletePost({index})}>delete</button></li>;
+            return <li key={index} className="list-group-item" ><PostItem item={item} /><button className="btn btn-danger btn-sm" onClick = {(e) => this.deletePost({index})}>delete</button></li>;
         });
         return(
         <div>
-            <AddPostForm addEvent={this.addPost} />
             <FilterPostForm filterText={this.state.filterText}  onFilterTextChange={this.handleFilterTextChange}/>
-            <ul>{items}</ul>
+            <AddPostForm addEvent={this.addPost} />
+            <ul className="list-group">{items}</ul>
         </div>
         );
     }
@@ -81,10 +81,12 @@ class PostApp extends React.Component {
 
 class PostItem extends React.Component {
     render(){
-        return (<div>
-                    <b>author:</b>{this.props.item.author}<br />
-                    <b>post:</b>{this.props.item.post}<br />
-                </div>);
+        return (
+            <div>
+                <h3>{this.props.item.author}</h3>
+                <pre>{this.props.item.post}</pre>
+            </div>
+        );
     }
 }
 
@@ -97,11 +99,24 @@ class AddPostForm extends React.Component {
         ReactDOM.findDOMNode(this.refs.author).focus();
     }
     render(){
-        return (<form onSubmit={this.onSubmit}>
-            <b>author</b><input ref="author" type="text" />
-            <b>post</b><input ref="post" type="text" />
-            <input type="submit" />
-        </form>);
+        return (
+        <div className="panel panel-default">
+            <div className="panel-body">
+                <form onSubmit={this.onSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="AuthorInput">Author</label>
+                        <input type="text" className="form-control" id="AuthorInput" ref="author"/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="PostInput">Post</label>
+                        <textarea className="form-control" id="PostInput" ref="post"></textarea>
+                    </div>
+                    <div className="form-group">
+                        <input className="btn btn-success" type="submit" value="Add post"/>
+                    </div>
+                </form>
+            </div>
+        </div>);
     }
     onSubmit(event){
         event.preventDefault();
@@ -125,16 +140,16 @@ class FilterPostForm extends React.Component {
         this.props.onFilterTextChange(e.target.value);
     }
 
-    render(){
-        return (<form onSubmit={this.onSubmit}>
-            <input
-            type="text"
-            placeholder="Search..."
-            value={this.props.filterText}
-            onChange={this.handleFilterTextChange}
-            />
-        </form>);
+    render() {
+        return (
+            <form onSubmit={this.onSubmit}>
+                <div className="form-group">
+                    <input type="text"  className="form-control" placeholder="Search..." value={this.props.filterText} onChange={this.handleFilterTextChange}/>
+                </div>
+            </form>
+        );
     }
+
     onSubmit(event){
         event.preventDefault();
     }
