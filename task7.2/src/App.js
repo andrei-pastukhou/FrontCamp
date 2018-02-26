@@ -1,9 +1,21 @@
 import React from "react";
 import {render} from "react-dom";
 import {mock} from "./mock/mock"
+
+
+
 import AddPostForm from "./components/AddPostForm"
 import FilterPostForm from "./components/FilterPostForm"
 import PostItem from './components/PostItem'
+import Header from './components/Header'
+import AddPostPage from './components/AddPostPage'
+import IndexPage from './components/IndexPage'
+import LoginPage from './components/LoginPage'
+import RegisterPage from './components/RegisterPage'
+import ListPage from './components/ListPage'
+
+import { Switch, Route } from 'react-router-dom'
+
 
 export default class PostApp extends React.Component {
 
@@ -29,6 +41,14 @@ export default class PostApp extends React.Component {
         });
         return(
             <div>
+              <Header />
+              <Switch>
+                <Route exact path='/' component={IndexPage}/>
+                <Route path='/register' component={RegisterPage}/>
+                <Route path='/login' component={LoginPage}/>
+                <Route path='/list' component={ListPage}/>
+                <Route path='/addPost' component={AddPostPage}/>
+              </Switch>
                 <FilterPostForm filterText={this.state.filterText}  onFilterTextChange={this.handleFilterTextChange.bind(this)} />
                 <AddPostForm addEvent={this.addPost.bind(this)} state={this.state} />
                 <ul className="list-group">{items}</ul>
@@ -54,3 +74,4 @@ export default class PostApp extends React.Component {
         this.setState({filterText: filterText});
     }
 }
+
