@@ -1,6 +1,6 @@
 import React from "react";
-
 import ListPost from '../containers/listPost'
+
 export default class ListPage extends React.Component {
   constructor(props) {
     super(props);
