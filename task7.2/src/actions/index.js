@@ -5,27 +5,27 @@ export const addTodo = text => {
         id: nextTodoId++,
         text
     }
-}
+};
 
 export const setVisibilityFilter = filter => {
     return {
         type: 'SET_VISIBILITY_FILTER',
         filter
     }
-}
+};
 
 export const toggleTodo = id => {
     return {
         type: 'TOGGLE_TODO',
         id
     }
-}
+};
 
 export const VisibilityFilters = {
     SHOW_ALL: 'SHOW_ALL',
     SHOW_COMPLETED: 'SHOW_COMPLETED',
     SHOW_ACTIVE: 'SHOW_ACTIVE'
-}
+};
 
 //custom code
 export const addPost = (text, author) => {
@@ -35,7 +35,14 @@ export const addPost = (text, author) => {
         text: text,
         author: author
     }
-}
+};
+
+export const deletePost = (id) => {
+    return {
+        type: 'DELETE_POST',
+        id: id
+    }
+};
 
 //custom code
 export const FilterPost = (author) => {
@@ -43,4 +50,4 @@ export const FilterPost = (author) => {
         type: 'FILTER_POST',
         author: author,
     }
-}
+};

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import {render} from "react-dom";
 import PostItem from '../components/PostItem'
-
+import {deletePost} from '../actions'
 
 
 class ListPost extends React.Component {
@@ -12,19 +12,23 @@ class ListPost extends React.Component {
     }
 
 
+    deletePost(id) {
+        this.props.dispatch(deletePost(id));
+    }
 
     render() {
          let items = this.props.posts.map((item,index) => {
              return (
-             <li key={index} className="list-group-item" >
+             <li key={item.id} className="list-group-item" >
                  <PostItem item={item} />
+                 <button className="btn btn-danger btn-sm" onClick = {(e) => this.deletePost(item.id)}>delete</button>
              </li>
              );
         });
         return (
             <ul className="list-group"> {items} </ul>);
     }
-    // <button className="btn btn-danger btn-sm" onClick = {(e) => this.deletePost({index})}>delete</button>
+
 }
 const mapStateToProps = (state) => {
     return {

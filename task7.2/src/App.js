@@ -48,7 +48,6 @@ export default class PostApp extends React.Component {
     deletePost(key) {
         let newItemsState = this.state.items;
         newItemsState.splice(key.index, 1);
-
         this.setState({items: newItemsState});
     }
 

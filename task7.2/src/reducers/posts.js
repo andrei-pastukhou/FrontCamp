@@ -5,12 +5,12 @@ const posts = (state = [], action) => {
                 ...state,
                 {
                     id: action.id,
-                    author: 1,
+                    author: action.author,
                     text: action.text,
                 }
             ];
         case 'DELETE_POST':
-            return state;
+            return state.filter(({ id }) => id !== action.id);
         default:
             return state
     }
