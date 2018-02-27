@@ -1,4 +1,5 @@
 import React from "react";
+import AddPost from '../containers/AddPost'
 
 export default class AddPostPage extends React.Component {
   constructor(props) {
@@ -7,7 +8,10 @@ export default class AddPostPage extends React.Component {
 
   render() {
     return (
+    <div>
       <h1>AddPostPage</h1>
+      <AddPost />
+    </div>
     )
   }
 }
