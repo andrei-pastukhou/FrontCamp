@@ -1,7 +1,9 @@
-const visibilityFilter = (state = 'SHOW_ALL', action) => {
+const visibilityFilter = (state = '', action) => {
     switch (action.type) {
-        case 'SET_VISIBILITY_FILTER':
-            return action.filter
+        case 'FILTER_POST':
+            let newState = state;
+            newState = action.author;
+            return newState;
         default:
             return state
     }

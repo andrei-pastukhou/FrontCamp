@@ -17,14 +17,17 @@ class ListPost extends React.Component {
     }
 
     render() {
-         let items = this.props.posts.map((item,index) => {
-             return (
-             <li key={item.id} className="list-group-item" >
-                 <PostItem item={item} />
-                 <button className="btn btn-danger btn-sm" onClick = {(e) => this.deletePost(item.id)}>delete</button>
-             </li>
-             );
+        let items = this.props.posts.map((item, index) => {
+            if (this.props.visibilityFilter === '' || item.author.match(this.props.visibilityFilter)) {
+                return (
+                <li key={item.id} className="list-group-item">
+                    <PostItem item={item}/>
+                    <button className="btn btn-danger btn-sm" onClick={(e) => this.deletePost(item.id)}>delete</button>
+                </li>
+                );
+            }
         });
+
         return (
             <ul className="list-group"> {items} </ul>);
     }
@@ -33,6 +36,7 @@ class ListPost extends React.Component {
 const mapStateToProps = (state) => {
     return {
         posts : state.posts,
+        visibilityFilter: state.visibilityFilter
     };
 }
 
