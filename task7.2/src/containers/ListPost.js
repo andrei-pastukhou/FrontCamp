@@ -4,11 +4,12 @@ import { connect } from 'react-redux'
 import {render} from "react-dom";
 import PostItem from '../components/PostItem'
 import {deletePost} from '../actions'
-
+import {fetchPosts} from '../actions'
 
 class ListPost extends React.Component {
     constructor(props) {
         super(props);
+        this.props.dispatch(fetchPosts(this.props.token));
     }
 
 
@@ -20,9 +21,9 @@ class ListPost extends React.Component {
         let items = this.props.posts.map((item, index) => {
             if (this.props.visibilityFilter === '' || item.author.match(this.props.visibilityFilter)) {
                 return (
-                <li key={item.id} className="list-group-item">
+                <li key={item._id} className="list-group-item">
                     <PostItem item={item}/>
-                    <button className="btn btn-danger btn-sm" onClick={(e) => this.deletePost(item.id)}>delete</button>
+                    <button className="btn btn-danger btn-sm" onClick={(e) => this.deletePost(item._id)}>delete</button>
                 </li>
                 );
             }
@@ -36,7 +37,9 @@ class ListPost extends React.Component {
 const mapStateToProps = (state) => {
     return {
         posts : state.posts,
-        visibilityFilter: state.visibilityFilter
+        visibilityFilter: state.visibilityFilter,
+        islogin : state.login.isLogin,
+        token: state.login.token,
     };
 }
 

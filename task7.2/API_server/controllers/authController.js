@@ -3,7 +3,7 @@ const passport = require("passport");
 const User = require("../models/user");
 
 const userController = {};
-
+const jwt = require('jsonwebtoken');
 // Restrict access to root page
 userController.home = (req, res) => {
     res.render('index', {user: req.user});
@@ -37,9 +37,27 @@ userController.login = (req, res) => {
 
 // Post login
 userController.doLogin = (req, res) => {
-    passport.authenticate('local')(req, res, function () {
-        res.redirect('/');
+    // passport.authenticate('jwt')(req, res, function () {
+    //     res.json({
+    //         status: 'ok',
+    //         token: 'sometoken',
+    //     });
+    //    // res.redirect('/');
+    // });
+
+    User.findOne({'username': req.body.username, 'password': req.body.password}, (err, user) => {
+
+        if (!user) {
+            res.status(401).json({status:'error', message: "no such user found"});
+        } else {
+
+            // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
+            var payload = {id: user['_id']};
+            var token = jwt.sign(payload, 'secret');
+            res.json({status: "ok", token: token});
+        }
     });
+
 };
 
 // logout

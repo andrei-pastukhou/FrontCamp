@@ -8,7 +8,7 @@ const NOT_FOUND = 404;
 /* GET home page. */
 
 // Return  all existing posts
-router.get('/', isAuthenticated, (req, res, next) => {
+router.get('/', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     Post.find({}, (err, posts) => {
         if (err) {
             res.send(err);

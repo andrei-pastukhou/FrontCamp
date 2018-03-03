@@ -19,6 +19,23 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 
+const cors = require('cors');
+const corsOPtions = {
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 200
+};
+
+
+
+const jwt = require('jsonwebtoken');
+const passportJWT = require("passport-jwt");
+
+const ExtractJwt = passportJWT.ExtractJwt;
+const JwtStrategy = passportJWT.Strategy;
+
+
 //Set up default mongoose connection
 mongoose.connect(config.mongodb.connectionUrl, config.mongodb.options);
 // Get Mongoose to use the global promise library
@@ -26,10 +43,16 @@ mongoose.Promise = global.Promise;
 //Get the default connection
 const db = mongoose.connection;
 
+
+
+
+
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const app = express();
+
+app.use(cors(corsOPtions));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -45,17 +68,51 @@ app.use(require('express-session')({
     resave: false,
     saveUninitialized: false
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
+const User = require('./models/user');
+
+var opts = {}
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = 'secret';
+// opts.issuer = 'accounts.examplesoft.com';
+// opts.audience = 'yoursite.net';
+passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+
+    console.log(jwt_payload.sub);
+    User.findOne({id: jwt_payload.sub}, function(err, user) {
+        if (err) {
+            return done(err, false);
+        }
+        if (user) {
+            return done(null, user);
+        } else {
+            return done(null, false);
+            // or you could create a new account
+        }
+    });
+}));
+
+
+
+
 
 app.use('/', index);
 app.use('/blogs', blogs);
 
 // passport configuration
-const User = require('./models/user');
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+
+// passport.use(new LocalStrategy(User.authenticate()));
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
+
+
+
+
+//passport.use(strategy);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

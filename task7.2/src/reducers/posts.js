@@ -9,6 +9,9 @@ const posts = (state = [], action) => {
                     text: action.text,
                 }
             ];
+        case 'FETCH_POST_SUCCESS':
+            console.log(action)
+            return action.posts;
         case 'DELETE_POST':
             return state.filter(({ id }) => id !== action.id);
         default:
