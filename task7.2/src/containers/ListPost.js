@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import {render} from "react-dom";
 import PostItem from '../components/PostItem'
-import {deletePost} from '../actions'
+import {deletePosts} from '../actions'
 import {fetchPosts} from '../actions'
 
 class ListPost extends React.Component {
@@ -14,7 +14,8 @@ class ListPost extends React.Component {
 
 
     deletePost(id) {
-        this.props.dispatch(deletePost(id));
+        this.props.dispatch(deletePosts(id,this.props.token));//todo promise 
+        this.props.dispatch(fetchPosts(this.props.token));
     }
 
     render() {

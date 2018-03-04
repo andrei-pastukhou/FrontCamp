@@ -55,19 +55,35 @@ export const login = (login, password) => {
 
 
 export const fetchPosts = (token) => {
-    return (dispatch) => {
-        fetch(API.getAllPost.url, {
-            method: API.getAllPost.method,
-            headers: {
-                'Authorization' : 'bearer ' + token
-            }
-        }).then((response) => {
-            return response.json();
-        })
-        .then(data => {
-             dispatch({type: 'FETCH_POST_SUCCESS', posts: data})
-        })
-    }
+  return (dispatch) => {
+    fetch(API.getAllPost.url, {
+      method: API.getAllPost.method,
+      headers: {
+        'Authorization' : 'bearer ' + token
+      }
+    }).then((response) => {
+      return response.json();
+    })
+      .then(data => {
+        dispatch({type: 'FETCH_POST_SUCCESS', posts: data})
+      })
+  }
+};
+
+export const deletePosts = ( id,token) => {
+  return (dispatch) => {
+    fetch(API.deletePost.url + '/' + id, {
+      method: API.deletePost.method,
+      headers: {
+        'Authorization' : 'bearer ' + token
+      }
+    }).then((response) => {
+      return response.json();
+    })
+      .then(data => {
+        dispatch({type: 'DELETE_POST_SUCCESS', posts: data})
+      })
+  }
 }
 
 //custom code
