@@ -41,7 +41,10 @@ router.post('/', (req, res, next) => {
         if (err) {
             res.send(err);
         } else {
-            res.json({message: 'Post created!'});
+            res.json({
+              status: 'ok',
+              message: 'Post created!'
+            });
         }
     });
 });

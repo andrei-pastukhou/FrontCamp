@@ -11,4 +11,8 @@ export const API = {
         url: `http://127.0.0.1:3000/login`,
         method : 'POST',
     },
+    addPost: {
+      url: `http://localhost:3000/blogs`,
+      method : 'POST'
+    }
 };

@@ -6,7 +6,7 @@ const mapStateToProps = (state) => {
     return {
         visibilityFilter : state.visibilityFilter,
     };
-}
+};
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -14,11 +14,11 @@ const mapDispatchToProps = dispatch => {
             dispatch(FilterPost(author));
         }
     }
-}
+};
 
 const Filter = connect(
 mapStateToProps,
 mapDispatchToProps
-)(FilterPostForm)
+)(FilterPostForm);
 
 export default Filter

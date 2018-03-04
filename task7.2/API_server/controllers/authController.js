@@ -16,18 +16,19 @@ userController.register = (req, res) => {
 
 // Post registration
 userController.doRegister = (req, res) => {
-    User.register(new User({
+    let newUser = new User({
         username: req.body.username,
-        name: req.body.name
-    }), req.body.password, function (err, user) {
-        if (err) {
-            return res.render('register', {user: user});
-        }
+        name: req.body.name,
+        password: req.body.password
 
-        passport.authenticate('local')(req, res, function () {
-            res.redirect('/');
-        });
     });
+  newUser.save(function (err) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json({message: 'User created!'});
+    }
+  });
 };
 
 // Go to login page

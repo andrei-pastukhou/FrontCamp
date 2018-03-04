@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addPost} from '../actions'
+import {addPostToServer} from '../actions'
 
 import {render} from "react-dom";
 
@@ -32,12 +32,16 @@ class AddPostForm extends React.Component {
 
     onSubmit(event) {
         event.preventDefault();
-        this.props.dispatch(addPost(this.refs.post.value, this.refs.author.value));
+        this.props.dispatch(addPostToServer(this.refs.post.value, this.refs.author.value, this.props.token));
         this.refs.post.value = '';
         this.refs.author.value = '';
     }
 }
-
-AddPostForm = connect()(AddPostForm);
+const mapStateToProps = (state) => {
+  return {
+    token: state.login.token,
+  };
+}
+AddPostForm = connect(mapStateToProps)(AddPostForm);
 
 export default AddPostForm

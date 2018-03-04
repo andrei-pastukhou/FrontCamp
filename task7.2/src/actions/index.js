@@ -5,7 +5,6 @@ import fetch from 'isomorphic-fetch';
 export const addPost = (text, author) => {
     return {
         type: 'ADD_POST',
-        id: newId++,
         text: text,
         author: author
     }
@@ -70,3 +69,33 @@ export const fetchPosts = (token) => {
         })
     }
 }
+
+//custom code
+export const addPostToServer = (text, author, token) => {
+  return (dispatch) => {
+    dispatch({type: 'ADD_POST_PENDING'});
+    fetch(API.addPost.url, {
+      method: API.addPost.method,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization' : 'bearer ' + token
+      },
+      body:
+      encodeURIComponent('author') + '=' + encodeURIComponent(author) + '&' +
+      encodeURIComponent('text') + '=' + encodeURIComponent(text),
+
+    }).then((response) => {
+      console.log(response);
+         return response.json();
+    })
+      .then(data => {
+        if (data.status === 'ok') {
+          dispatch({type: 'ADD_POST_SUCCSESS', token: data.token})
+        }else {
+          dispatch({type: 'ADD_POST_ERROR', message: 'don\'t correct login or password'})
+        }
+      })
+      .catch(errors => dispatch({type: 'ADD_POST_ERROR', message: 'Errror with connection to server'}))
+  }
+};
