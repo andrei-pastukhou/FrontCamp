@@ -18,7 +18,6 @@ userController.register = (req, res) => {
 userController.doRegister = (req, res) => {
     let newUser = new User({
         username: req.body.username,
-        name: req.body.name,
         password: req.body.password
 
     });
@@ -26,7 +25,9 @@ userController.doRegister = (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.json({message: 'User created!'});
+      res.json({
+        status: 'ok',
+        message: 'User created!'});
     }
   });
 };

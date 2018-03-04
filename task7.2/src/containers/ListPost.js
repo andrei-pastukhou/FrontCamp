@@ -14,7 +14,7 @@ class ListPost extends React.Component {
 
 
     deletePost(id) {
-        this.props.dispatch(deletePosts(id,this.props.token));//todo promise 
+        this.props.dispatch(deletePosts(id,this.props.token));//todo promise
         this.props.dispatch(fetchPosts(this.props.token));
     }
 

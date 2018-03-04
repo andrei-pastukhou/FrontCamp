@@ -19,5 +19,9 @@ export const API = {
         url: `http://127.0.0.1:3000/login`,
         method : 'POST',
     },
+    register: {
+        url: `http://127.0.0.1:3000/Register`,
+        method : 'POST',
+    },
 
 };

@@ -53,6 +53,33 @@ export const login = (login, password) => {
     }
 };
 
+//custom code
+export const register = (login, password) => {
+  return (dispatch) => {
+    dispatch({type: 'REGISTER_PENDING'});
+    fetch(API.register.url, {
+      method: API.register.method,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body:
+      encodeURIComponent('username') + '=' + encodeURIComponent(login) + '&' +
+      encodeURIComponent('password') + '=' + encodeURIComponent(password),
+
+    }).then((response) => {
+      return response.json();
+    })
+      .then(data => {
+        if (data.status === 'ok') {
+          dispatch({type: 'REGISTER_SUCCSESS', message: 'user succsess registered'})
+        }else {
+          dispatch({type: 'REGISTER_ERROR', message: 'don\'t correct login or password'})
+        }
+      })
+      .catch(errors => dispatch({type: 'REGISTER_ERROR', message: 'Errror with connection to server'}))
+  }
+};
 
 export const fetchPosts = (token) => {
   return (dispatch) => {
