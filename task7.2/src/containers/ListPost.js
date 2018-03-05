@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
         islogin : state.login.isLogin,
         token: state.login.token,
     };
-}
+};
 
 ListPost = connect(mapStateToProps)(ListPost);
 

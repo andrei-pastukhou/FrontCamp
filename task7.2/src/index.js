@@ -1,20 +1,20 @@
 import React from "react";
-import { render } from "react-dom";
+import {render} from "react-dom";
 import PostApp from "./App";
-import { BrowserRouter } from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 
-import { Provider } from 'react-redux'
-import { createStore, applyMiddleware, compose  } from 'redux'
+import {Provider} from 'react-redux'
+import {createStore, applyMiddleware, compose} from 'redux'
 import AppReducer from './reducers'
 
 import thunkMiddleware from 'redux-thunk';
 
 
-let store = createStore(AppReducer,compose(applyMiddleware(thunkMiddleware),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+let store = createStore(AppReducer, compose(applyMiddleware(thunkMiddleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
 render((
-  <Provider store={store}>
+<Provider store={store}>
     <BrowserRouter>
-      <PostApp />
+        <PostApp store={store}/>
     </BrowserRouter>
-  </Provider>
+</Provider>
 ), document.getElementById('app'));

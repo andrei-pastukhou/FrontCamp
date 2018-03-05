@@ -1,10 +1,10 @@
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import FilterPostForm from '../components/FilterPostForm'
 import {FilterPost} from '../actions';
 
 const mapStateToProps = (state) => {
     return {
-        visibilityFilter : state.visibilityFilter,
+        visibilityFilter: state.visibilityFilter,
     };
 };
 
@@ -16,9 +16,6 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-const Filter = connect(
-mapStateToProps,
-mapDispatchToProps
-)(FilterPostForm);
+const Filter = connect(mapStateToProps, mapDispatchToProps)(FilterPostForm);
 
 export default Filter

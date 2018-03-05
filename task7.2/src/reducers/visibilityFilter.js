@@ -7,6 +7,6 @@ const visibilityFilter = (state = '', action) => {
         default:
             return state
     }
-}
+};
 
 export default visibilityFilter

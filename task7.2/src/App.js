@@ -3,7 +3,6 @@ import {render} from "react-dom";
 
 import Header from './components/Header'
 import AddPostPage from './components/AddPostPage'
-import IndexPage from './components/IndexPage'
 import LoginPage from './components/LoginPage'
 import RegisterPage from './components/RegisterPage'
 import ListPage from './components/ListPage'
@@ -14,6 +13,7 @@ export default class PostApp extends React.Component {
 
     constructor(props) {
         super(props);
+        this.props = props;
     }
 
     render() {
@@ -21,14 +21,12 @@ export default class PostApp extends React.Component {
         <div>
             <Header/>
             <Switch>
-                <Route exact path='/' component={IndexPage}/>
+                <Route exact path='/' component={ListPage}/>
                 <Route path='/register' component={RegisterPage}/>
                 <Route path='/login' component={LoginPage}/>
-                <Route path='/list' component={ListPage}/>
                 <Route path='/addPost' component={AddPostPage}/>
             </Switch>
         </div>
         );
     }
 }
-

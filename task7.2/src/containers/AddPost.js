@@ -15,10 +15,6 @@ class AddPostForm extends React.Component {
             <div className="panel-body">
                 <form onSubmit={this.onSubmit.bind(this)}>
                     <div className="form-group">
-                        <label htmlFor="AuthorInput">Author</label>
-                        <input type="text" className="form-control" id="AuthorInput" ref="author"/>
-                    </div>
-                    <div className="form-group">
                         <label htmlFor="PostInput">Post</label>
                         <textarea className="form-control" id="PostInput" ref="post"/>
                     </div>
@@ -32,15 +28,16 @@ class AddPostForm extends React.Component {
 
     onSubmit(event) {
         event.preventDefault();
-        this.props.dispatch(addPostToServer(this.refs.post.value, this.refs.author.value, this.props.token));
+        this.props.dispatch(addPostToServer(this.refs.post.value, this.props.username, this.props.token));
         this.refs.post.value = '';
-        this.refs.author.value = '';
     }
 }
+
 const mapStateToProps = (state) => {
-  return {
-    token: state.login.token,
-  };
+    return {
+        token: state.login.token,
+        username: state.login.username
+    };
 }
 AddPostForm = connect(mapStateToProps)(AddPostForm);
 

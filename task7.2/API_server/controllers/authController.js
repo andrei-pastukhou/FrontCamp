@@ -16,20 +16,28 @@ userController.register = (req, res) => {
 
 // Post registration
 userController.doRegister = (req, res) => {
-    let newUser = new User({
-        username: req.body.username,
-        password: req.body.password
+    User.findOne({'username': req.body.username}, (err, user) => {
 
+        if (user) {
+            res.status(409).json({status: 'error', message: "User with this username is exist"});
+        } else {
+            let newUser = new User({
+                username: req.body.username,
+                password: req.body.password
+
+            });
+            newUser.save(function (err) {
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.json({
+                        status: 'ok',
+                        message: 'User created!'
+                    });
+                }
+            });
+        }
     });
-  newUser.save(function (err) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.json({
-        status: 'ok',
-        message: 'User created!'});
-    }
-  });
 };
 
 // Go to login page
@@ -39,23 +47,12 @@ userController.login = (req, res) => {
 
 // Post login
 userController.doLogin = (req, res) => {
-    // passport.authenticate('jwt')(req, res, function () {
-    //     res.json({
-    //         status: 'ok',
-    //         token: 'sometoken',
-    //     });
-    //    // res.redirect('/');
-    // });
-
     User.findOne({'username': req.body.username, 'password': req.body.password}, (err, user) => {
-
         if (!user) {
-            res.status(401).json({status:'error', message: "no such user found"});
+            res.status(401).json({status: 'error', message: "no such user found"});
         } else {
-
-            // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
-            var payload = {id: user['_id']};
-            var token = jwt.sign(payload, 'secret');
+            let payload = {id: user['_id']};
+            let token = jwt.sign(payload, 'secret');
             res.json({status: "ok", token: token});
         }
     });

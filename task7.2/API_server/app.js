@@ -4,21 +4,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 // Import config
 import {config} from './config/config.js';
-
-
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-
 const index = require('./routes/index');
 const blogs = require('./routes/blogs');
-
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-
-
 const cors = require('cors');
 const corsOPtions = {
     origin: '*',
@@ -27,14 +21,11 @@ const corsOPtions = {
     optionsSuccessStatus: 200
 };
 
-
-
 const jwt = require('jsonwebtoken');
 const passportJWT = require("passport-jwt");
 
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
-
 
 //Set up default mongoose connection
 mongoose.connect(config.mongodb.connectionUrl, config.mongodb.options);
@@ -42,9 +33,6 @@ mongoose.connect(config.mongodb.connectionUrl, config.mongodb.options);
 mongoose.Promise = global.Promise;
 //Get the default connection
 const db = mongoose.connection;
-
-
-
 
 
 //Bind connection to error event (to get notification of connection errors)
@@ -72,15 +60,11 @@ app.use(require('express-session')({
 // app.use(passport.session());
 const User = require('./models/user');
 
-var opts = {}
+let opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = 'secret';
-// opts.issuer = 'accounts.examplesoft.com';
-// opts.audience = 'yoursite.net';
-passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-
-    console.log(jwt_payload.sub);
-    User.findOne({id: jwt_payload.sub}, function(err, user) {
+passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
+    User.findOne({id: jwt_payload.sub}, function (err, user) {
         if (err) {
             return done(err, false);
         }
@@ -88,43 +72,24 @@ passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
             return done(null, user);
         } else {
             return done(null, false);
-            // or you could create a new account
         }
     });
 }));
 
-
-
-
-
 app.use('/', index);
 app.use('/blogs', blogs);
 
-// passport configuration
-
-// passport.use(new LocalStrategy(User.authenticate()));
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
-
-
-
-
-//passport.use(strategy);
-
-
-
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handler
 app.use('*', function (err, req, res, next) {
-  //res.status(err.status || 500);
-  res.render('error');
+    //res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;

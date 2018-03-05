@@ -3,6 +3,7 @@ const initialState = {
     token: '',
     message: '',
     pending: false,
+    username: '',
 }
 const login = (state = initialState, action) => {
     switch (action.type) {
@@ -22,7 +23,9 @@ const login = (state = initialState, action) => {
                         isLogin: true,
                         pending: false,
                         token: action.token,
-                        message: ''
+                        message: '',
+                        username: action.username
+
                     }
                 )
             );
@@ -33,7 +36,8 @@ const login = (state = initialState, action) => {
                         isLogin: false,
                         pending: false,
                         token: '',
-                        message: 'error according to login server'
+                        message: action.message,
+                        username: ''
                     }
                 )
             );
@@ -44,7 +48,8 @@ const login = (state = initialState, action) => {
                         isLogin: false,
                         pending: false,
                         token: '',
-                        message: ''
+                        message: '',
+                        username: ''
                     }
                 )
             );
