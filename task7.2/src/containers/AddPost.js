@@ -33,12 +33,11 @@ class AddPostForm extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        token: state.login.token,
-        username: state.login.username
-    };
-}
+const mapStateToProps = (state) => ({
+   token: state.login.token,
+   username: state.login.username
+});
+
 AddPostForm = connect(mapStateToProps)(AddPostForm);
 
 export default AddPostForm

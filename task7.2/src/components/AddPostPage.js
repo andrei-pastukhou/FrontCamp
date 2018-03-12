@@ -5,35 +5,29 @@ import {connect} from 'react-redux'
 import {config} from '../config'
 
 
-export default class AddPostPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        if(!this.props.islogin){
-            return (
+let AddPostPage = ({isLogin}) => {
+    if(!isLogin) {
+        return (
             <div>
                 <h1>AddPostPage</h1>
                 <h4>
                     {config.notAuthMessage} <Link to='/login'>Login</Link> or <Link to='/register'>Register</Link>
                 </h4>
             </div>
-            )
-        }
-        return (
+        )
+    }
+    return (
         <div>
             <h1>AddPostPage</h1>
             <AddPost/>
         </div>
-        )
-    }
-}
-
-const mapStateToProps = (state) => {
-    return {
-        islogin : state.login.isLogin,
-    };
+    )
 };
 
+const mapStateToProps = (state) => ({
+    isLogin: state.login.isLogin,
+});
+
 AddPostPage = connect(mapStateToProps)(AddPostPage);
+
+export default AddPostPage;

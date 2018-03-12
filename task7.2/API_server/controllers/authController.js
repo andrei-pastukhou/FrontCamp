@@ -1,7 +1,4 @@
-const mongoose = require("mongoose");
-const passport = require("passport");
 const User = require("../models/user");
-
 const userController = {};
 const jwt = require('jsonwebtoken');
 // Restrict access to root page
@@ -17,18 +14,16 @@ userController.register = (req, res) => {
 // Post registration
 userController.doRegister = (req, res) => {
     User.findOne({'username': req.body.username}, (err, user) => {
-
         if (user) {
             res.status(409).json({status: 'error', message: "User with this username is exist"});
         } else {
             let newUser = new User({
                 username: req.body.username,
                 password: req.body.password
-
             });
             newUser.save(function (err) {
                 if (err) {
-                    res.send(err);
+                    res.sendStatus(201);
                 } else {
                     res.json({
                         status: 'ok',
@@ -56,7 +51,6 @@ userController.doLogin = (req, res) => {
             res.json({status: "ok", token: token});
         }
     });
-
 };
 
 // logout

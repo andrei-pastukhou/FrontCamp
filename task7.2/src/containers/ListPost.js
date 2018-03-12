@@ -14,8 +14,7 @@ class ListPost extends React.Component {
 
 
     deletePost(id) {
-        this.props.dispatch(deletePosts(id,this.props.token));//todo promise
-        this.props.dispatch(fetchPosts(this.props.token));
+        this.props.dispatch(deletePosts(id,this.props.token));
     }
 
     render() {
@@ -33,16 +32,14 @@ class ListPost extends React.Component {
         return (
             <ul className="list-group"> {items} </ul>);
     }
-
 }
-const mapStateToProps = (state) => {
-    return {
-        posts : state.posts,
-        visibilityFilter: state.visibilityFilter,
-        islogin : state.login.isLogin,
-        token: state.login.token,
-    };
-};
+
+const mapStateToProps = (state) => ({
+    posts : state.posts,
+    visibilityFilter: state.visibilityFilter,
+    islogin : state.login.isLogin,
+    token: state.login.token
+});
 
 ListPost = connect(mapStateToProps)(ListPost);
 

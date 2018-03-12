@@ -42,15 +42,15 @@ function onError(error) {
         throw error;
     }
 
-    const bind = 'Port ' + port;
+    const bind = `Port ${port}`;
 
     switch (error.code) {
         case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
+            console.error(`${bind} requires elevated privileges`);
             process.exit(1);
             break;
         case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
+            console.error(`${bind} is already in use`);
             process.exit(1);
             break;
         default:
@@ -61,9 +61,8 @@ function onError(error) {
 /**
  * Event listener for HTTP server "listening" event.
  */
-
 function onListening() {
     const addr = server.address();
-    const bind = 'port ' + addr.port;
-    debug('Listening on ' + bind);
+    const bind = `port  ${addr.port}`;
+    debug(`Listening on ${bind}`);
 }

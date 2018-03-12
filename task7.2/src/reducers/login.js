@@ -4,55 +4,24 @@ const initialState = {
     message: '',
     pending: false,
     username: '',
-}
+};
 const login = (state = initialState, action) => {
     switch (action.type) {
         case 'LOGIN':
             return (
-                Object.assign( {}, state,
-                    {
-                        isLogin: false,
-                        pending: true,
-                    }
-                )
+                Object.assign({}, initialState, { isLogin: false, pending: true })
             );
         case 'LOGIN_SUCCSESS':
             return (
-                Object.assign({}, state,
-                    {
-                        isLogin: true,
-                        pending: false,
-                        token: action.token,
-                        message: '',
-                        username: action.username
-
-                    }
-                )
+                Object.assign({}, initialState, action.data)
             );
         case 'LOGIN_ERROR':
             return (
-                Object.assign({}, state,
-                    {
-                        isLogin: false,
-                        pending: false,
-                        token: '',
-                        message: action.message,
-                        username: ''
-                    }
-                )
+                Object.assign({}, initialState, action.data)
             );
         case 'LOGOUT':
             return (
-                Object.assign({}, state,
-                    {
-                        isLogin: false,
-                        pending: false,
-                        token: '',
-                        message: '',
-                        username: ''
-                    }
-                )
-            );
+                Object.assign({}, initialState));
         default:
             return state
     }

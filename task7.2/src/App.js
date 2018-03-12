@@ -21,10 +21,10 @@ export default class PostApp extends React.Component {
         <div>
             <Header/>
             <Switch>
-                <Route exact path='/' component={ListPage}/>
-                <Route path='/register' component={RegisterPage}/>
-                <Route path='/login' component={LoginPage}/>
-                <Route path='/addPost' component={AddPostPage}/>
+                <Route exact path='/' component={ListPage} />
+                <Route path='/register' component={RegisterPage} />
+                <Route path='/login' component={LoginPage} />
+                <Route path='/addPost' component={AddPostPage} />
             </Switch>
         </div>
         );

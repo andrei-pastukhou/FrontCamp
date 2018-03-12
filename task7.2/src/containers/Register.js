@@ -49,12 +49,10 @@ class RegisterForm extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
+const mapStateToProps = (state) => ({
         message: state.register.message,
-        pending: state.register.pending,
-    };
-};
+        pending: state.register.pending
+});
 
 RegisterForm = connect(mapStateToProps)(RegisterForm);
 

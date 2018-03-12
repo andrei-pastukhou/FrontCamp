@@ -72,14 +72,12 @@ class LoginForm extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        message : state.login.message,
-        pending : state.login.pending,
-        isLogin : state.login.isLogin,
-        username: state.login.username
-    };
-};
+const mapStateToProps = (state) => ({
+    message : state.login.message,
+    pending : state.login.pending,
+    isLogin : state.login.isLogin,
+    username: state.login.username
+});
 
 LoginForm = connect(mapStateToProps)(LoginForm);
 

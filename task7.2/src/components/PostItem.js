@@ -1,12 +1,12 @@
 import React from "react";
 
-export default class PostItem extends React.Component {
-    render() {
-        return (
+const PostItem = ({item}) => {
+    return (
         <div>
-            <h3>{this.props.item.author}</h3>
-            <pre>{this.props.item.text}</pre>
+            <h3>{item.author}</h3>
+            <pre>{item.text}</pre>
         </div>
-        );
-    }
+    );
 }
+
+export default PostItem;
