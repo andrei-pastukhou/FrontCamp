@@ -1,0 +1,29 @@
+<!doctype html>
+<head>
+    <title>Tasks App</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"></script>
+</head>
+<body>
+    <div ng-app="toDoApp">
+        <div ng-controller="toDoController">
+
+            <h3>Active ({{ tasks.length }})</h3>
+            <span ng-if="tasks.length === 0">You have no active tasks!</span>
+            <ul ng-repeat="task in tasks">
+                <li>
+                    <input type="checkbox" ng-click="removeTask($index)" /> {{ task }}
+                </li>
+            </ul>
+
+            <h2>Add a Task</h2>
+            <form>
+                <input type="text" placeholder="Description" ng-model="newTaskName" />
+                <input type="button" value="Add" ng-click="addTask()" />
+            </form>
+
+        </div>
+    </div>
+    
+    <script src="todo.js"></script>
+</body>
+</html>
