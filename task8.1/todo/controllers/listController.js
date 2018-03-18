@@ -1,4 +1,4 @@
-todoApp.controller('listController', ['$scope', 'todoFactory', function ($scope, todoFactory) {
+todoApp.controller('listController', function ($scope, todoFactory) {
     $scope.tasks = todoFactory.getTasks()
     $scope.filterDays = '';
     $scope.filterDate =  function(task) {
@@ -18,5 +18,5 @@ todoApp.controller('listController', ['$scope', 'todoFactory', function ($scope,
         todoFactory.doneTask(task);
     }
 
-}]);
+});
 

@@ -10,6 +10,10 @@ var todoApp = angular.module('todoApp', ["ngRoute"])
                 templateUrl:'view/add.html',
                 controller:'addController'
             });
+        $routeProvider.when("/edit/:id", {
+            templateUrl:'view/edit.html',
+            controller:'editController'
+        });
         $routeProvider.otherwise({redirectTo: '/list'});
     });
 
@@ -47,8 +51,10 @@ todoApp.factory("todoFactory", function(){
             task.statusDone = !task.statusDone;
         },
         removeTask: function removeTask(task){
-            console.log(task);
             taskList.splice(taskList.indexOf(task), 1)
+        },
+        editTask: function editTask(id,task){
+            taskList[id]=task;
         }
     };
 });

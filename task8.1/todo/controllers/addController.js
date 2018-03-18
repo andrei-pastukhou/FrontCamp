@@ -1,4 +1,4 @@
-todoApp.controller('addController', ['$scope', 'todoFactory', function ($scope, todoFactory) {
+todoApp.controller('addController', function ($scope, todoFactory) {
     $scope.tasks = todoFactory.getTasks()
     $scope.newTaskName = '';
 
@@ -10,5 +10,5 @@ todoApp.controller('addController', ['$scope', 'todoFactory', function ($scope, 
         }
 
     };
-}]);
+});
 

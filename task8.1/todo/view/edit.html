@@ -1,0 +1,10 @@
+<div ng-app="toDoApp">
+    <h2>Edit Task</h2>
+    <form name="editTaskForm">
+        <input type="text" placeholder="Description" name="newTaskName" ng-model="editTaskName" required ng-minlength="3"/>
+        <input type="submit" value="Edit" ng-click="editTask()" />
+        </br>
+        <p ng-show="editTaskForm.editTaskName.$error.minlength" class="help-block">Description is too short.</p>
+    </form>
+</div>
+</div>
