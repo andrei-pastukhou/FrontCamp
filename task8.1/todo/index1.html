@@ -1,17 +1,27 @@
 <!doctype html>
 <head>
     <title>Tasks App</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js"></script>-->
+    <script src="angular.js"></script>
 </head>
 <body>
     <div ng-app="toDoApp">
         <div ng-controller="toDoController">
 
-            <h3>Active ({{ tasks.length }})</h3>
+            <h3>new Task</h3>
             <span ng-if="tasks.length === 0">You have no active tasks!</span>
+
             <ul ng-repeat="task in tasks">
-                <li>
-                    <input type="checkbox" ng-click="removeTask(task)" /> {{ task }}
+                <li ng-if="task.statusDone === false">
+                    <input type="checkbox" ng-click="doneTask(task)" /> {{ task.text }} {{task.date | date: "yyyy-MM-ddTHH:mm:ss"}}
+                </li>
+            </ul>
+
+            <h3>done Task</h3>
+            <ul ng-repeat="task in tasks">
+                <li ng-if="task.statusDone === true">
+                    <input type="checkbox" checked ng-click="doneTask(task)" /> {{ task.text }} {{task.date | date: "yyyy-MM-ddTHH:mm:ss"}}
+                    <input type="button" value="delete" ng-click="removeTask(task)" />
                 </li>
             </ul>
 
