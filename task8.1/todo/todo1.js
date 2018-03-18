@@ -45,6 +45,15 @@ app.factory("todoFactory", function(){
 app.controller('toDoController', ['$scope', 'todoFactory', function ($scope, todoFactory) {
     $scope.tasks = todoFactory.getTasks()
     $scope.newTaskName = '';
+    $scope.filterDays = '';
+    $scope.filterDate =  function(task) {
+        var fDate = new Date();
+        if($scope.filterDays > 0){
+            fDate.setDate(fDate.getDate() - $scope.filterDays);
+            return task.date > fDate;
+        }
+        return true;
+    };
 
     $scope.addTask = function () {
         todoFactory.addTask($scope.newTaskName)

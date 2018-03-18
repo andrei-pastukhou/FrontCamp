@@ -7,19 +7,19 @@
 <body>
     <div ng-app="toDoApp">
         <div ng-controller="toDoController">
-
+            <input type="text" placeholder="how old todo to show in days" ng-model="filterDays" />
             <h3>new Task</h3>
             <span ng-if="tasks.length === 0">You have no active tasks!</span>
 
-            <ul ng-repeat="task in tasks">
-                <li ng-if="task.statusDone === false">
+            <ul ng-repeat="task in tasks | filter:{statusDone: false} | filter : filterDate">
+                <li>
                     <input type="checkbox" ng-click="doneTask(task)" /> {{ task.text }} {{task.date | date: "yyyy-MM-ddTHH:mm:ss"}}
                 </li>
             </ul>
 
             <h3>done Task</h3>
-            <ul ng-repeat="task in tasks">
-                <li ng-if="task.statusDone === true">
+            <ul ng-repeat="task in tasks | filter:{statusDone: true} | filter : filterDate">
+                <li>
                     <input type="checkbox" checked ng-click="doneTask(task)" /> {{ task.text }} {{task.date | date: "yyyy-MM-ddTHH:mm:ss"}}
                     <input type="button" value="delete" ng-click="removeTask(task)" />
                 </li>
