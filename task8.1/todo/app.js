@@ -17,7 +17,7 @@ var todoApp = angular.module('todoApp', ["ngRoute"])
         $routeProvider.otherwise({redirectTo: '/list'});
     });
 
-todoApp.factory("todoFactory", function(){
+todoApp.factory("todoFactory", function($http){
     var taskList = [
         {
             text: 'task1',
@@ -55,6 +55,20 @@ todoApp.factory("todoFactory", function(){
         },
         editTask: function editTask(id,task){
             taskList[id]=task;
+        },
+        loadData: function () {
+            $http.get('task.json')
+
+                .then(function(response) {
+                    response.data.forEach(function (element){
+                        element.date = new Date(element.date);
+                        taskList.push(element);
+                    });
+                })
+
+                .catch(function(error){
+                    console.error("Error with GET request", error);
+                });
         }
     };
 });
