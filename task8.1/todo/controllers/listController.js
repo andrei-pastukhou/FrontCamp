@@ -16,7 +16,10 @@ todoApp.controller('listController', function ($scope, todoFactory) {
 
     $scope.doneTask = function (task) {
         todoFactory.doneTask(task);
-    }
+    };
 
+    $scope.loadData = function () {
+        todoFactory.loadData();
+    }
 });
 
