@@ -2,8 +2,12 @@ adminApp.component('articlesList', {
     templateUrl: 'view/articles-list.template.html',
     controller: function ($scope, todoFactory) {
         $scope.list = todoFactory.getList();
-        $scope.articlesPerPage = todoFactory.getArticlesPerPage();
-
+        $scope.articlesPerPage = 2;
+        $scope.currentPage = 1;
+        $scope.start = $scope.currentPage * $scope.articlesPerPage;
+        $scope.numberOfPages=function(){
+            return Math.ceil($scope.list.length/$scope.articlesPerPage);
+        };
         $scope.filterDays = '';
         $scope.filterDate = function (task) {
             var fDate = new Date();
@@ -27,4 +31,9 @@ adminApp.component('articlesList', {
         };
     }
 });
-
+adminApp.filter('startFrom', function() {
+    return function(input, start) {
+        start = +start; //parse to int
+        return input.slice(start );
+    }
+});

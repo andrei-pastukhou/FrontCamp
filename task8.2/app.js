@@ -4,10 +4,6 @@ var adminApp = angular.module('adminApp', ['ngRoute'])
             {
                 templateUrl:'view/list.html',
             });
-        $routeProvider.when('/list/:page',
-            {
-                templateUrl:'view/list.html',
-            });
         $routeProvider.when('/add',
             {
                 templateUrl:'view/add.html',
@@ -35,16 +31,28 @@ adminApp.factory('todoFactory', function($http){
             text: 'task3 text',
             title: 'task3',
             date: new Date('2018-03-15T12:00:00.000Z')
+        },
+        {
+            text: 'task4 text',
+            title: 'task4',
+            date: new Date('2018-03-17T12:00:00.000Z')
+        },
+        {
+            text: 'task5 text',
+            title: 'task5',
+            date: new Date('2018-03-16T12:00:00.000Z')
+        },
+        {
+            text: 'task6 text',
+            title: 'task6',
+            date: new Date('2018-03-15T12:00:00.000Z')
         }
 
+
     ];
-    var articlesPerPage = 1;
     return {
         getList: function getList() {
             return list;
-        },
-        getArticlesPerPage: function getArticlesPerPage() {
-            return articlesPerPage;
         },
         addArticle: function addArticle(title,text){
             list.push({
