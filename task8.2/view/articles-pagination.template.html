@@ -1,0 +1,7 @@
+<h2>pagination</h2>
+{{start}}
+<ul ng-repeat="article in list | filter : filterDate" >
+    <li ng-if="$index > start && $index <= end" >
+        <a href="#!list\{{$index}}">{{$index}}</a>
+    </li>
+</ul>

@@ -1,44 +1,50 @@
-var todoApp = angular.module('todoApp', ["ngRoute"])
+var adminApp = angular.module('adminApp', ['ngRoute'])
     .config(function($routeProvider){
         $routeProvider.when('/list',
             {
                 templateUrl:'view/list.html',
-                // controller:'listController'
-
+            });
+        $routeProvider.when('/list/:page',
+            {
+                templateUrl:'view/list.html',
             });
         $routeProvider.when('/add',
             {
                 templateUrl:'view/add.html',
                 formType:'add'
             });
-        $routeProvider.when("/edit/:id", {
+        $routeProvider.when('/edit/:id', {
             templateUrl:'view/edit.html',
             formType:'edit'
         });
         $routeProvider.otherwise({redirectTo: '/list'});
     });
-todoApp.factory("todoFactory", function($http){
+adminApp.factory('todoFactory', function($http){
     var list = [
         {
             text: 'task1 text',
             title: 'task1',
-            date: new Date("2018-03-17T12:00:00.000Z")
+            date: new Date('2018-03-17T12:00:00.000Z')
         },
         {
             text: 'task2 text',
             title: 'task2',
-            date: new Date("2018-03-16T12:00:00.000Z")
+            date: new Date('2018-03-16T12:00:00.000Z')
         },
         {
             text: 'task3 text',
             title: 'task3',
-            date: new Date("2018-03-15T12:00:00.000Z")
+            date: new Date('2018-03-15T12:00:00.000Z')
         }
 
     ];
+    var articlesPerPage = 1;
     return {
         getList: function getList() {
             return list;
+        },
+        getArticlesPerPage: function getArticlesPerPage() {
+            return articlesPerPage;
         },
         addArticle: function addArticle(title,text){
             list.push({
@@ -47,24 +53,22 @@ todoApp.factory("todoFactory", function($http){
                 date: new Date()
             });
         },
-        removeArticle: function removeArticle(task){
-            list.splice(list.indexOf(task), 1);
+        removeArticle: function removeArticle(article){
+            list.splice(list.indexOf(article), 1);
         },
-        editArticle: function editTask(id,task){
-            list[id]=task;
+        editArticle: function editArticle(id,article){
+            list[id]=article;
         },
         loadData: function loadData() {
             $http.get('task.json')
-
                 .then(function(response) {
                     response.data.forEach(function (element){
                         element.date = new Date(element.date);
                         list.push(element);
                     });
                 })
-
                 .catch(function(error){
-                    console.error("Error with GET request", error);
+                    console.error('Error with GET request', error);
                 });
         }
     };

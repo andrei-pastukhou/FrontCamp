@@ -1,4 +1,4 @@
-todoApp.component('formList', {
+adminApp.component('formList', {
     templateUrl: 'view/articles-form.template.html',
     controller: function ($scope, todoFactory,$route, $routeParams) {
         $scope.formType = $route.current.$$route.formType;

@@ -1,7 +1,9 @@
-todoApp.component('articlesList', {
+adminApp.component('articlesList', {
     templateUrl: 'view/articles-list.template.html',
     controller: function ($scope, todoFactory) {
-        $scope.list = todoFactory.getList()
+        $scope.list = todoFactory.getList();
+        $scope.articlesPerPage = todoFactory.getArticlesPerPage();
+
         $scope.filterDays = '';
         $scope.filterDate = function (task) {
             var fDate = new Date();
