@@ -29,4 +29,3 @@ adminApp.component('formList', {
         };
     }
 });
-
