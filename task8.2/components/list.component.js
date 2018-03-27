@@ -8,24 +8,10 @@ adminApp.component('articlesList', {
         $scope.numberOfPages=function(){
             return Math.ceil($scope.list.length/$scope.articlesPerPage);
         };
-        $scope.filterDays = '';
-        $scope.filterDate = function (task) {
-            var fDate = new Date();
-            if ($scope.filterDays > 0) {
-                fDate.setDate(fDate.getDate() - $scope.filterDays);
-                return task.date > fDate;
-            }
-            return true;
-        };
 
         $scope.removeArticle = function (task) {
             todoFactory.removeArticle(task);
         };
-
-        $scope.loadData = function () {
-            todoFactory.loadData();
-        };
-
         $scope.loadData = function () {
             todoFactory.loadData();
         };

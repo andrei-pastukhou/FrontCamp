@@ -1,7 +1,6 @@
 <h2>List of articles</h2>
-<input type="text" placeholder="how old todo to show in days" ng-model="filterDays" />
 <span ng-if="list.length === 0">You have no articles!</span>
-<ul ng-repeat="article in list | filter : filterDate | startFrom: articlesPerPage* currentPage | limitTo: articlesPerPage ">
+<ul ng-repeat="article in list  | startFrom: articlesPerPage* currentPage | limitTo: articlesPerPage ">
     <li>
         title : {{ article.title }} </br>
         text : {{ article.text }} </br>
