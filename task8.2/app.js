@@ -50,16 +50,23 @@ adminApp.factory('todoFactory', function($http){
 
 
     ];
+    var config = {
+        articlesPerPage : 2,
+        startPage : 1
+    };
     return {
         getList: function getList() {
             return list;
+        },
+        getConfig : function getConfig() {
+            return config;
         },
         addArticle: function addArticle(title,text){
             list.push({
                 title: title,
                 text: text,
-                date: new Date()
-            });
+                date: moment().format()
+        });
         },
         removeArticle: function removeArticle(article){
             list.splice(list.indexOf(article), 1);
