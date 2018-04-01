@@ -7,7 +7,8 @@
     "start": "webpack-dev-server --config webpack-configs/dev.js",
     "build-prod": "webpack --config webpack-configs/prod.js",
     "test": "react-scripts test",
-    "test-jest": "jest"
+    "test-jest": "jest",
+    "test-coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",

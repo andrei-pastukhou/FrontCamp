@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`register reduxer with snapshots  should handle REGISTER 1`] = `
+Object {
+  "message": "",
+  "pending": true,
+}
+`;
+
+exports[`register reduxer with snapshots  should handle REGISTER_ERROR 1`] = `
+Object {
+  "message": "test error message",
+  "pending": false,
+}
+`;
+
+exports[`register reduxer with snapshots  should handle REGISTER_SUCCSESS 1`] = `
+Object {
+  "message": "test message",
+  "pending": false,
+}
+`;
+
+exports[`register reduxer with snapshots  should handle initial state 1`] = `
+Object {
+  "message": "",
+  "pending": false,
+}
+`;

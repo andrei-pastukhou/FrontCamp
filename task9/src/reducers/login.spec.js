@@ -78,3 +78,39 @@ describe('login reducer', () => {
         )
     });
 });
+
+describe('login reduxer with snapshots ', () => {
+    it('+++ reducer with shapshot', () => {
+      expect(login(undefined, { type: 'default' })).toMatchSnapshot();
+    });
+  
+    it('+++ reducer with shapshot', () => {
+      const action = {
+        type: 'LOGIN',
+      };
+      expect(login(undefined, action)).toMatchSnapshot();
+    });
+   
+    it('should handle LOGIN_SUCCSESS', () => {
+        const action = {
+            type: 'LOGIN_SUCCSESS',
+            token: 'test_token',
+            username: 'test_username'
+        }
+        expect(login(undefined, action)).toMatchSnapshot();
+    });
+    it('should handle LOGIN_ERROR', () => {
+        const action = {
+            type: 'LOGIN_ERROR',
+            message: 'test error login',
+        }
+        expect(login(undefined, action)).toMatchSnapshot();
+    });
+    it('should handle LOGOUT', () => {
+        const action =  {
+            type: 'LOGOUT',
+            message: 'test error login',
+        }
+        expect(login(undefined, action)).toMatchSnapshot();
+    });
+  });

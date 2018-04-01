@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`login reduxer with snapshots  +++ reducer with shapshot 1`] = `
+Object {
+  "isLogin": false,
+  "message": "",
+  "pending": false,
+  "token": "",
+  "username": "",
+}
+`;
+
+exports[`login reduxer with snapshots  +++ reducer with shapshot 2`] = `
+Object {
+  "isLogin": false,
+  "message": "",
+  "pending": true,
+  "token": "",
+  "username": "",
+}
+`;
+
+exports[`login reduxer with snapshots  should handle LOGIN_ERROR 1`] = `
+Object {
+  "isLogin": false,
+  "message": "test error login",
+  "pending": false,
+  "token": "",
+  "username": "",
+}
+`;
+
+exports[`login reduxer with snapshots  should handle LOGIN_SUCCSESS 1`] = `
+Object {
+  "isLogin": true,
+  "message": "",
+  "pending": false,
+  "token": "test_token",
+  "username": "test_username",
+}
+`;
+
+exports[`login reduxer with snapshots  should handle LOGOUT 1`] = `
+Object {
+  "isLogin": false,
+  "message": "",
+  "pending": false,
+  "token": "",
+  "username": "",
+}
+`;
