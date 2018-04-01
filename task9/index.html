@@ -1,20 +1,34 @@
 <!doctype html>
-<html ng-app="adminApp">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="public/custom.css">
+
+    <title>Frontcamp task 7.1 React</title>
+    <script defer src="./dest/js/main.bundle.js"></script>
 </head>
 <body>
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+            </ul>
+        </nav>
+        <h3 class="text-muted">Frontcamp 3 React</h3>
+    </div>
 
-<nav><a href="#!list">List</a>|<a href="#!add">Add task</a></nav>
-<ng-view></ng-view>
+    <div id="app">
+
+    </div>
 
 
-<script src="lib/angular.js"></script>
-<script src="lib/angular-route.js"></script>
-<script src="lib/moment.js"></script>
-<script src="app.js"></script>
+    <footer class="footer">
+        <p>© 2018 Pastukhou Andrei.</p>
+    </footer>
 
-<script src="components/list.component.js"></script>
-<script src="components/form.component.js"></script>
+</div>
+
 </body>
 </html>
