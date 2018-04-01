@@ -4,8 +4,6 @@ const posts = (state = [], action) => {
             return state;
         case 'FETCH_POST_SUCCESS':
             return action.posts;
-        case 'DELETE_POST':
-            return state.filter(({ id }) => id !== action.id);
         default:
             return state
     }
