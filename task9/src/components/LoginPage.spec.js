@@ -9,8 +9,7 @@ global.render = render;
 
 describe('<LoginPage/>', () => {
    it('test LoginPage component', () => {
-      const renderedComponent = shallow(<LoginPage />
-      );
+      const renderedComponent = shallow(<LoginPage />);
       
       expect(renderedComponent.find('h1').length).toBe(1);
       expect(renderedComponent.find('h1').text()).toBe('LoginPage');
