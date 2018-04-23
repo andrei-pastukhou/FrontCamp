@@ -1,0 +1,9 @@
+{
+  "presets": ["react", ["env", {
+    "targets": {
+      "chrome": "60"
+    }
+  }]
+  ],
+  "plugins": ["react-hot-loader/babel"]
+}

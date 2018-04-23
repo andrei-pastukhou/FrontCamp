@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`post reduxer with snapshots  should handle ADD_POST_PENDING 1`] = `Array []`;
+
+exports[`post reduxer with snapshots  should handle FETCH_POST_SUCCESS 1`] = `
+Array [
+  "testpost1",
+  "testpost2",
+]
+`;
+
+exports[`post reduxer with snapshots  should handle initial state 1`] = `Array []`;

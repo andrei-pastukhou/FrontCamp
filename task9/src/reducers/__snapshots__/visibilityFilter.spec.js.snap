@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`visibilityFilter reduxer with snapshots  should handle FILTER_POST 1`] = `"testAuthor"`;
+
+exports[`visibilityFilter reduxer with snapshots  should handle initial state 1`] = `""`;
