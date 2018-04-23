@@ -1,0 +1,8 @@
+<form name="articleForm">
+    <input type="text" placeholder="Title" name="formTitle" ng-model="form.title" required ng-minlength="3"/>
+    <p ng-show="articleForm.formTitle.$error.minlength" class="help-block">Title is too short.</p>
+    <input type="text" placeholder="Text" name="formText" ng-model="form.text" required ng-minlength="3"/>
+    <p ng-show="articleForm.formText.$error.minlength" class="help-block">Text is too short.</p>
+    <input type="submit" value="{{form.type}}" ng-click="save()" />
+    </br>
+</form>
